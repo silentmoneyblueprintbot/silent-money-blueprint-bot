@@ -1,7 +1,9 @@
 name: Publish to YouTube
 
 on:
-  workflow_dispatch:
+  schedule:
+    - cron: "0 10 * * *"   # todos os dias 10:00 UTC
+  workflow_dispatch: {}
 
 jobs:
   publish:
@@ -14,7 +16,8 @@ jobs:
         with:
           python-version: "3.11"
 
-      - run: |
+      - name: Install Python deps
+        run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
@@ -23,12 +26,24 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ffmpeg
 
-
-      - run: |
+      - name: Write OAuth secret to file
+        run: |
           echo '${{ secrets.YOUTUBE_CLIENT_SECRET_JSON }}' > client_secret.json
 
-      - run: python scripts/generate_video.py
+      - name: Decide video mode (short daily, long on Saturday)
+        run: |
+          if [ "$(date -u +%u)" = "6" ]; then
+            echo "Saturday => long"
+            echo "VIDEO_MODE=long" >> $GITHUB_ENV
+          else
+            echo "Daily => short"
+            echo "VIDEO_MODE=short" >> $GITHUB_ENV
+          fi
 
-      - env:
+      - name: Generate video
+        run: python scripts/generate_video.py
+
+      - name: Upload to YouTube
+        env:
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
         run: python scripts/upload_youtube.py
