@@ -15,13 +15,15 @@ def run(cmd):
     subprocess.run(cmd, check=True)
 
 def ssml(text: str) -> str:
-    # SSML reduz “robótico”: pausas + rate + pitch
+    # SSML reduz “robótico”: pausas + rate + pitch (sem backslash dentro de f-string)
     safe = text.replace("&", "and")
+    safe = safe.replace("\n", " <break time='250ms'/> ")
+
     return f"""
 <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">
   <voice name="en-US-JennyNeural">
     <prosody rate="-5%" pitch="+2st">
-      {safe.replace("\n", "<break time='250ms'/>")}
+      {safe}
     </prosody>
   </voice>
 </speak>
