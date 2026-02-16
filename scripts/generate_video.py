@@ -11,11 +11,13 @@ OUT_DIR.mkdir(exist_ok=True)
 
 MODE = os.getenv("VIDEO_MODE", "short")  # short | long
 
+
 def run(cmd):
     subprocess.run(cmd, check=True)
 
+
 def ssml(text: str) -> str:
-    # SSML reduz “robótico”: pausas + rate + pitch (sem backslash dentro de f-string)
+    # SSML reduz “robótico”: pausas + rate + pitch
     safe = text.replace("&", "and")
     safe = safe.replace("\n", " <break time='250ms'/> ")
 
@@ -29,8 +31,9 @@ def ssml(text: str) -> str:
 </speak>
 """.strip()
 
+
 def make_audio(mp3_path: Path, text: str):
-    # 1) Tenta Edge Neural (melhor voz). Às vezes bloqueia no GitHub.
+    # 1) Tenta Edge Neural
     try:
         run([
             "python", "-m", "edge_tts",
@@ -49,8 +52,9 @@ def make_audio(mp3_path: Path, text: str):
     gTTS(text, lang="en").save(str(mp3_path))
     print("✅ Audio via gTTS")
 
+
 def post_process_audio(inp: Path, outp: Path):
-    # “Des-robótica”: compressão suave + EQ + leve reverb
+    # Compressão + EQ + leve reverb
     run([
         "ffmpeg", "-y",
         "-i", str(inp),
@@ -63,25 +67,32 @@ def post_process_audio(inp: Path, outp: Path):
         str(outp)
     ])
 
+
+# 🔥 NOVO — evita crashes do drawtext
+def write_text_file(path: Path, text: str):
+    safe = text.replace("\r\n", "\n").replace("\r", "\n").strip()
+    path.write_text(safe, encoding="utf-8")
+
+
 def build_visual_filter(title: str):
-    # Variantes visuais “b-roll” sem downloads:
-    # 1) money rain ($)  2) chart line  3) soft gradient
     rng = random.Random(datetime.utcnow().strftime("%Y-%m-%d-%H"))
     style = rng.choice(["money_rain", "chart", "gradient"])
 
-    title_text = title.replace(":", "\\:").replace("'", "\\'")
+    # 🔥 escreve título num ficheiro (em vez de usar text='...')
+    title_file = OUT_DIR / "title.txt"
+    write_text_file(title_file, title)
 
     base = "format=yuv420p"
     overlay_box = "drawbox=x=80:y=180:w=920:h=460:color=black@0.35:t=fill"
+
     draw_title = (
         "drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf:"
-        f"text='{title_text}':fontcolor=white:fontsize=64:"
+        f"textfile={title_file}:reload=0:"
+        "fontcolor=white:fontsize=64:"
         "x=(w-text_w)/2:y=240"
     )
 
     if style == "money_rain":
-        # “Chover dinheiro”: chuva de símbolos $ a cair
-        # (simples mas funciona bem em short)
         rain = (
             "geq=r='18+12*sin(2*PI*X/W+T/2)+20*(Y/H)':"
             "g='16+14*sin(2*PI*Y/H+T/3)+18*(X/W)':"
@@ -97,7 +108,6 @@ def build_visual_filter(title: str):
         return f"{rain},{base},{overlay_box},{draw_title}"
 
     if style == "chart":
-        # Linha a “subir” (efeito de gráfico)
         chart = (
             "geq=r='10+10*(Y/H)':g='12+10*(X/W)':b='22+10*(Y/H)',"
             "noise=alls=8:allf=t+u,"
@@ -108,7 +118,6 @@ def build_visual_filter(title: str):
         )
         return f"{chart},{base},{overlay_box},{draw_title}"
 
-    # gradient default
     grad = (
         "geq=r='20+8*sin(2*PI*(X/W)+T/2)+12*(Y/H)':"
         "g='18+10*sin(2*PI*(Y/H)+T/3)+16*(X/W)':"
@@ -116,6 +125,7 @@ def build_visual_filter(title: str):
         "noise=alls=10:allf=t+u"
     )
     return f"{grad},{base},{overlay_box},{draw_title}"
+
 
 def main():
     if MODE == "long":
@@ -135,7 +145,7 @@ def main():
     run([
         "ffmpeg", "-y",
         "-f", "lavfi",
-        "-i", "nullsrc=s=1080x1920:d=120",  # grande; corta no áudio
+        "-i", "nullsrc=s=1080x1920:d=120",
         "-i", str(mp3),
         "-vf", vf,
         "-c:v", "libx264",
@@ -150,6 +160,7 @@ def main():
         f"Silent Money Blueprint.\n\n{tags}",
         encoding="utf-8"
     )
+
 
 if __name__ == "__main__":
     main()
