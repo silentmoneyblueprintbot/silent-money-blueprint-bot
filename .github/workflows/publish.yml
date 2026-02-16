@@ -21,10 +21,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Install ffmpeg
+      - name: Install ffmpeg + fonts (drawtext)
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg
+          sudo apt-get install -y ffmpeg fontconfig fonts-dejavu-core
 
       - name: Write OAuth secret to file
         run: |
