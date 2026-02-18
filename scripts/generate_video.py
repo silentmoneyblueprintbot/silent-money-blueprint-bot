@@ -40,18 +40,19 @@ EDGE_VOICES = [
 ]
 
 def make_audio(mp3_path: Path, text: str):
-    rng = random.Random(datetime.utcnow().strftime("%Y-%m-%d"))  # muda por dia
-    voice = rng.choice(EDGE_VOICES)
+    ssml_content = ssml(text)
+    ssml_file = OUT_DIR / "voice.ssml"
+    ssml_file.write_text(ssml_content, encoding="utf-8")
 
     try:
         run([
             "python", "-m", "edge_tts",
-            "--voice", voice,
-            "--text", ssml(text).replace("en-US-JennyNeural", voice),
+            "--voice", "en-US-JennyNeural",
+            "--file", str(ssml_file),
             "--write-media", str(mp3_path),
             "--ssml"
         ])
-        print(f"✅ Audio via edge-tts (Neural) — {voice}")
+        print("✅ Audio via edge-tts (Neural)")
         return
     except Exception as e:
         print("⚠️ edge-tts falhou, fallback gTTS:", e)
@@ -59,6 +60,7 @@ def make_audio(mp3_path: Path, text: str):
     from gtts import gTTS
     gTTS(text, lang="en").save(str(mp3_path))
     print("✅ Audio via gTTS")
+
 
 
 
@@ -99,11 +101,12 @@ def build_visual_filter(title: str, duration_sec: int = 120):
     overlay_box = "drawbox=x=80:y=180:w=920:h=460:color=black@0.38:t=fill"
 
     draw_title = (
-        "drawtext=font='DejaVu Sans:style=Bold':"
-        f"textfile={title_file}:reload=0:"
-        "fontcolor=white:fontsize=64:"
-        "x=(w-text_w)/2:y=240"
-    )
+    "drawtext=font=DejaVuSans-Bold:"
+    f"textfile={title_file}:reload=0:"
+    "fontcolor=white:fontsize=64:"
+    "x=(w-text_w)/2:y=240"
+)
+
 
     mc = (
     "geq=r='14+6*(Y/H)':g='14+7*(X/W)':b='18+8*(Y/H)',"
