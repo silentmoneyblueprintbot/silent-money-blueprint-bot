@@ -35,12 +35,20 @@ jobs:
           mkdir -p piper
           cd piper
 
-          curl -fL --retry 5 --retry-delay 2 -o piper_linux_x86_64.tar.gz \
-            https://github.com/rhasspy/piper/releases/download/v1.2.0/piper_linux_x86_64.tar.gz
+          # Always fetch latest release
+          LATEST_URL=$(curl -s https://api.github.com/repos/rhasspy/piper/releases/latest | \
+            grep browser_download_url | \
+            grep piper_linux_x86_64.tar.gz | \
+            cut -d '"' -f 4)
+
+          echo "Downloading: $LATEST_URL"
+
+          curl -fL --retry 5 --retry-delay 2 -o piper_linux_x86_64.tar.gz "$LATEST_URL"
 
           tar -xzf piper_linux_x86_64.tar.gz
           ls -lah
           ./piper --help | head -n 20
+
 
       # =========================
       # Download Piper voice
