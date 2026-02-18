@@ -86,6 +86,8 @@ jobs:
           fi
 
       - name: Generate video
+        env:
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
         run: python scripts/generate_video.py
 
       - name: Upload to YouTube
