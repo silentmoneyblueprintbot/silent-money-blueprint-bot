@@ -17,55 +17,70 @@ def run(cmd):
 
 
 def ssml(text: str) -> str:
-    # SSML reduz “robótico”: pausas + rate + pitch
-    safe = text.replace("&", "and")
-    safe = safe.replace("\n", " <break time='250ms'/> ")
+    safe = text.replace("&", "and").strip()
+    # pausas mais humanas (ligeiramente maiores)
+    safe = safe.replace("\n", " <break time='320ms'/> ")
 
     return f"""
-<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">
+<speak version="1.0"
+  xmlns="http://www.w3.org/2001/10/synthesis"
+  xmlns:mstts="http://www.w3.org/2001/mstts"
+  xml:lang="en-US">
   <voice name="en-US-JennyNeural">
-    <prosody rate="-5%" pitch="+2st">
-      {safe}
-    </prosody>
+    <mstts:express-as style="friendly" styledegree="1.15">
+      <prosody rate="-2%" pitch="+1st">
+        {safe}
+      </prosody>
+    </mstts:express-as>
   </voice>
 </speak>
 """.strip()
 
 
+
+EDGE_VOICES = [
+    "en-US-JennyNeural",
+    "en-US-AriaNeural",
+    "en-US-GuyNeural",
+]
+
 def make_audio(mp3_path: Path, text: str):
-    # 1) Tenta Edge Neural (melhor voz). Às vezes bloqueia no GitHub.
+    rng = random.Random(datetime.utcnow().strftime("%Y-%m-%d"))  # muda por dia
+    voice = rng.choice(EDGE_VOICES)
+
     try:
         run([
             "python", "-m", "edge_tts",
-            "--voice", "en-US-JennyNeural",
-            "--text", ssml(text),
+            "--voice", voice,
+            "--text", ssml(text).replace("en-US-JennyNeural", voice),
             "--write-media", str(mp3_path),
             "--ssml"
         ])
-        print("✅ Audio via edge-tts (Neural)")
+        print(f"✅ Audio via edge-tts (Neural) — {voice}")
         return
     except Exception as e:
         print("⚠️ edge-tts falhou, fallback gTTS:", e)
 
-    # 2) Fallback gTTS
     from gtts import gTTS
     gTTS(text, lang="en").save(str(mp3_path))
     print("✅ Audio via gTTS")
 
 
+
 def post_process_audio(inp: Path, outp: Path):
-    # “Des-robótica”: compressão suave + EQ + leve reverb
     run([
         "ffmpeg", "-y",
         "-i", str(inp),
         "-af",
-        "highpass=f=80, lowpass=f=12000, "
-        "acompressor=threshold=-18dB:ratio=3:attack=10:release=120, "
-        "equalizer=f=300:t=q:w=1:g=-2, "
-        "equalizer=f=3000:t=q:w=1:g=2, "
-        "aecho=0.8:0.9:35:0.12",
+        "highpass=f=70, lowpass=f=12000, "
+        "afftdn=nf=-25, "
+        "acompressor=threshold=-18dB:ratio=3:attack=10:release=140, "
+        "dynaudnorm=f=150:g=7, "
+        "equalizer=f=220:t=q:w=1:g=-2, "
+        "equalizer=f=3500:t=q:w=1:g=2",
         str(outp)
     ])
+
 
 
 def write_text_file(path: Path, text: str):
@@ -74,20 +89,20 @@ def write_text_file(path: Path, text: str):
     path.write_text(safe, encoding="utf-8")
 
 
-def build_visual_filter(title: str):
-    # Variantes visuais “b-roll” sem downloads:
-    # 1) money rain ($)  2) chart line  3) soft gradient
-    rng = random.Random(datetime.utcnow().strftime("%Y-%m-%d-%H"))
-    style = rng.choice(["money_rain", "chart", "gradient"])
+def build_visual_filter(title: str, duration_sec: int = 120):
+    """
+    Fundo procedural estilo Minecraft/parkour:
+    """
 
-    # ✅ título via ficheiro (evita crashes por : , % \ etc)
+    rng = random.Random(datetime.utcnow().strftime("%Y-%m-%d-%H"))
+    seed = rng.randint(1, 99999)
+
     title_file = OUT_DIR / "title.txt"
     write_text_file(title_file, title)
 
     base = "format=yuv420p"
-    overlay_box = "drawbox=x=80:y=180:w=920:h=460:color=black@0.35:t=fill"
+    overlay_box = "drawbox=x=80:y=180:w=920:h=460:color=black@0.38:t=fill"
 
-    # ✅ usa fontconfig (font=...) em vez de fontfile absoluto
     draw_title = (
         "drawtext=font='DejaVu Sans:style=Bold':"
         f"textfile={title_file}:reload=0:"
@@ -95,42 +110,21 @@ def build_visual_filter(title: str):
         "x=(w-text_w)/2:y=240"
     )
 
-    if style == "money_rain":
-        # “Chover dinheiro”: chuva de símbolos $ a cair
-        rain = (
-            "geq=r='18+12*sin(2*PI*X/W+T/2)+20*(Y/H)':"
-            "g='16+14*sin(2*PI*Y/H+T/3)+18*(X/W)':"
-            "b='28+18*sin(2*PI*X/W+T/4)+18*(Y/H)',"
-            "noise=alls=12:allf=t+u,"
-            "drawtext=font='DejaVu Sans:style=Bold':"
-            "text='$  $   $  $   $':fontcolor=white@0.35:fontsize=80:"
-            "x=mod(40*T*60\\,w):y=mod(220*T\\,h),"
-            "drawtext=font='DejaVu Sans:style=Bold':"
-            "text='$$$':fontcolor=white@0.25:fontsize=120:"
-            "x=mod(70*T*40\\,w):y=mod(260*T+400\\,h)"
-        )
-        return f"{rain},{base},{overlay_box},{draw_title}"
+    mc = (
+    "geq=r='14+6*(Y/H)':g='14+7*(X/W)':b='18+8*(Y/H)',"
+    f"noise=alls=10:allf=t+u:seed={seed},"
+    "lutrgb=r='(val/48)*48':g='(val/48)*48':b='(val/48)*48',"
+    "eq=contrast=1.10:brightness=-0.015:saturation=1.05,"
+    "scale=iw/14:ih/14:flags=neighbor,"
+    "scale=iw*14:ih*14:flags=neighbor,"
+    "scale=1080:3840:flags=neighbor,"
+    "crop=1080:1920:x=0:y='mod(t*420,ih-1920)',"
+    "rotate='0.006*sin(t*1.1)':c=black@0"
+)
 
-    if style == "chart":
-        # Linha a “subir” (efeito de gráfico)
-        chart = (
-            "geq=r='10+10*(Y/H)':g='12+10*(X/W)':b='22+10*(Y/H)',"
-            "noise=alls=8:allf=t+u,"
-            "drawbox=x=120:y=820:w=840:h=520:color=black@0.25:t=fill,"
-            "drawgrid=w=80:h=80:t=1:c=white@0.08,"
-            "drawtext=font='DejaVu Sans':"
-            "text='COMPOUNDING':fontcolor=white@0.35:fontsize=32:x=140:y=860"
-        )
-        return f"{chart},{base},{overlay_box},{draw_title}"
 
-    # gradient default
-    grad = (
-        "geq=r='20+8*sin(2*PI*(X/W)+T/2)+12*(Y/H)':"
-        "g='18+10*sin(2*PI*(Y/H)+T/3)+16*(X/W)':"
-        "b='28+14*sin(2*PI*(X/W)+T/4)+18*(Y/H)',"
-        "noise=alls=10:allf=t+u"
-    )
-    return f"{grad},{base},{overlay_box},{draw_title}"
+    return f"{mc},{base},{overlay_box},{draw_title}"
+
 
 
 def main():
