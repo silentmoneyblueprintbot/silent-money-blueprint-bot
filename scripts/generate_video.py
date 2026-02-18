@@ -46,18 +46,16 @@ def make_audio(mp3_path: Path, text: str):
     rng = random.Random(day_seed)
     voice = os.getenv("EDGE_VOICE") or rng.choice(voices)
 
-    # texto normal (sem SSML)
     clean = text.replace("&", "and").strip()
 
     run([
         "python", "-m", "edge_tts",
         "--voice", voice,
         "--text", clean,
-        "--rate", "-1%",
-        "--pitch", "+0Hz",
         "--write-media", str(mp3_path),
     ])
     print(f"✅ Audio via edge-tts (Neural) — {voice}")
+
 
 
 
