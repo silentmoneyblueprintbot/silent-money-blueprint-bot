@@ -6,6 +6,8 @@ from datetime import datetime
 
 from content_factory import make_short, make_long
 
+PEXELS_API_KEY = os.getenv("PEXELS_API_KEY", "").strip()
+
 OUT_DIR = Path("out")
 OUT_DIR.mkdir(exist_ok=True)
 
