@@ -24,26 +24,40 @@ jobs:
       - name: Install ffmpeg + fonts (drawtext)
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg fontconfig fonts-dejavu-core
-          
+          sudo apt-get install -y ffmpeg fontconfig fonts-dejavu-core curl tar
+
+      # =========================
+      # Install Piper (offline TTS)
+      # =========================
       - name: Install Piper (offline TTS)
         run: |
-          sudo apt-get update
-          sudo apt-get install -y wget tar
+          set -euxo pipefail
           mkdir -p piper
           cd piper
-          wget -q https://github.com/rhasspy/piper/releases/download/v1.2.0/piper_linux_x86_64.tar.gz
-          tar -xzf piper_linux_x86_64.tar.gz
-          ./piper --help
 
+          curl -fL --retry 5 --retry-delay 2 -o piper_linux_x86_64.tar.gz \
+            https://github.com/rhasspy/piper/releases/download/v1.2.0/piper_linux_x86_64.tar.gz
+
+          tar -xzf piper_linux_x86_64.tar.gz
+          ls -lah
+          ./piper --help | head -n 20
+
+      # =========================
+      # Download Piper voice
+      # =========================
       - name: Download Piper voice (en_US)
         run: |
+          set -euxo pipefail
           mkdir -p voices
           cd voices
-          wget -q https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/lessac/medium/en_US-lessac-medium.onnx
-          wget -q https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/lessac/medium/en_US-lessac-medium.onnx.json
-          ls -lah
 
+          curl -fL --retry 5 --retry-delay 2 -o en_US-lessac-medium.onnx \
+            https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/lessac/medium/en_US-lessac-medium.onnx
+
+          curl -fL --retry 5 --retry-delay 2 -o en_US-lessac-medium.onnx.json \
+            https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/lessac/medium/en_US-lessac-medium.onnx.json
+
+          ls -lah
 
       - name: Write OAuth secret to file
         run: |
