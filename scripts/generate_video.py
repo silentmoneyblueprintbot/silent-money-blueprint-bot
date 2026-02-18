@@ -41,28 +41,24 @@ def ssml(text: str, voice: str) -> str:
 
 
 def make_audio(mp3_path: Path, text: str):
-    """
-    Deterministic voice selection (daily) + SSML via file (stable on runner).
-    IMPORTANT: if edge-tts fails, we FAIL the workflow (no gTTS robot uploads).
-    """
-    # rotate voice daily (optional) but keep it stable during the day
     voices = ["en-US-AriaNeural", "en-US-GuyNeural", "en-US-JennyNeural"]
     day_seed = datetime.utcnow().strftime("%Y-%m-%d")
     rng = random.Random(day_seed)
-    voice = os.getenv("EDGE_VOICE") or rng.choice(voices) or EDGE_VOICE_DEFAULT
+    voice = os.getenv("EDGE_VOICE") or rng.choice(voices)
 
-    ssml_file = OUT_DIR / "voice.ssml"
-    ssml_file.write_text(ssml(text, voice), encoding="utf-8")
+    # texto normal (sem SSML)
+    clean = text.replace("&", "and").strip()
 
-    # FAIL if edge-tts fails (better than publishing robotic gTTS)
     run([
         "python", "-m", "edge_tts",
         "--voice", voice,
-        "--file", str(ssml_file),
+        "--text", clean,
+        "--rate", "-1%",
+        "--pitch", "+0Hz",
         "--write-media", str(mp3_path),
-        "--ssml"
     ])
     print(f"✅ Audio via edge-tts (Neural) — {voice}")
+
 
 
 def post_process_audio(inp: Path, outp: Path):
