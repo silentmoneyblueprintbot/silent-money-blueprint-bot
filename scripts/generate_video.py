@@ -16,14 +16,23 @@ def run(cmd):
     subprocess.run(cmd, check=True)
 
 
-def ssml(text: str) -> str:
+# =========================
+# 1) VOICE (less robotic)
+# =========================
+# -> keep SSML SIMPLE for GitHub runners (mstts can break)
+# -> use Aria by default (usually more natural than Jenny)
+EDGE_VOICE_DEFAULT = os.getenv("EDGE_VOICE", "en-US-AriaNeural")
+
+
+def ssml(text: str, voice: str) -> str:
     safe = text.replace("&", "and").strip()
-    safe = safe.replace("\n", " <break time='300ms'/> ")
+    # gentle pauses between lines
+    safe = safe.replace("\n", " <break time='280ms'/> ")
 
     return f"""
 <speak>
-  <voice name="en-US-JennyNeural">
-    <prosody rate="-2%" pitch="+1st">
+  <voice name="{voice}">
+    <prosody rate="-1%" pitch="+0st">
       {safe}
     </prosody>
   </voice>
@@ -31,98 +40,140 @@ def ssml(text: str) -> str:
 """.strip()
 
 
-
-
-EDGE_VOICES = [
-    "en-US-JennyNeural",
-    "en-US-AriaNeural",
-    "en-US-GuyNeural",
-]
-
 def make_audio(mp3_path: Path, text: str):
-    ssml_content = ssml(text)
+    """
+    Deterministic voice selection (daily) + SSML via file (stable on runner).
+    IMPORTANT: if edge-tts fails, we FAIL the workflow (no gTTS robot uploads).
+    """
+    # rotate voice daily (optional) but keep it stable during the day
+    voices = ["en-US-AriaNeural", "en-US-GuyNeural", "en-US-JennyNeural"]
+    day_seed = datetime.utcnow().strftime("%Y-%m-%d")
+    rng = random.Random(day_seed)
+    voice = os.getenv("EDGE_VOICE") or rng.choice(voices) or EDGE_VOICE_DEFAULT
+
     ssml_file = OUT_DIR / "voice.ssml"
-    ssml_file.write_text(ssml_content, encoding="utf-8")
+    ssml_file.write_text(ssml(text, voice), encoding="utf-8")
 
-    try:
-        run([
-            "python", "-m", "edge_tts",
-            "--voice", "en-US-JennyNeural",
-            "--file", str(ssml_file),
-            "--write-media", str(mp3_path),
-            "--ssml"
-        ])
-        print("✅ Audio via edge-tts (Neural)")
-        return
-    except Exception as e:
-        print("⚠️ edge-tts falhou, fallback gTTS:", e)
-
-    from gtts import gTTS
-    gTTS(text, lang="en").save(str(mp3_path))
-    print("✅ Audio via gTTS")
-
-
+    # FAIL if edge-tts fails (better than publishing robotic gTTS)
+    run([
+        "python", "-m", "edge_tts",
+        "--voice", voice,
+        "--file", str(ssml_file),
+        "--write-media", str(mp3_path),
+        "--ssml"
+    ])
+    print(f"✅ Audio via edge-tts (Neural) — {voice}")
 
 
 def post_process_audio(inp: Path, outp: Path):
+    """
+    Light cleanup, keep it natural:
+    - no echo / no aggressive normalization
+    - bump bitrate & sample rate to reduce "cheap TTS" feeling
+    """
     run([
         "ffmpeg", "-y",
         "-i", str(inp),
         "-af",
         "highpass=f=70, lowpass=f=12000, "
-        "afftdn=nf=-25, "
-        "acompressor=threshold=-18dB:ratio=3:attack=10:release=140, "
-        "dynaudnorm=f=150:g=7, "
-        "equalizer=f=220:t=q:w=1:g=-2, "
-        "equalizer=f=3500:t=q:w=1:g=2",
+        "acompressor=threshold=-18dB:ratio=2.6:attack=10:release=120",
+        "-ar", "44100",
+        "-ac", "2",
+        "-b:a", "192k",
         str(outp)
     ])
 
 
-
+# =========================
+# 2) TEXT files helpers
+# =========================
 def write_text_file(path: Path, text: str):
-    # ffmpeg drawtext é muito mais estável com textfile=
     safe = text.replace("\r\n", "\n").replace("\r", "\n").strip()
     path.write_text(safe, encoding="utf-8")
 
 
-def build_visual_filter(title: str, duration_sec: int = 120):
-    """
-    Fundo procedural estilo Minecraft/parkour:
-    """
+def ffprobe_duration(path: Path) -> float:
+    out = subprocess.check_output([
+        "ffprobe", "-v", "error",
+        "-show_entries", "format=duration",
+        "-of", "default=noprint_wrappers=1:nokey=1",
+        str(path)
+    ]).decode().strip()
+    return float(out)
 
-    rng = random.Random(datetime.utcnow().strftime("%Y-%m-%d-%H"))
-    seed = rng.randint(1, 99999)
 
+def write_srt(srt_path: Path, text: str, total_sec: float):
+    """
+    Creates readable captions from the script.
+    Lines appear sequentially and stay centered near the bottom.
+    """
+    lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
+
+    # weight by words so long lines stay longer
+    weights = [max(1, len(ln.split())) for ln in lines]
+    total_w = sum(weights) if weights else 1
+
+    def ts(t):
+        h = int(t // 3600)
+        t -= h * 3600
+        m = int(t // 60)
+        t -= m * 60
+        s = int(t)
+        ms = int(round((t - s) * 1000))
+        return f"{h:02d}:{m:02d}:{s:02d},{ms:03d}"
+
+    t = 0.0
+    with srt_path.open("w", encoding="utf-8") as f:
+        for i, (ln, w) in enumerate(zip(lines, weights), start=1):
+            dur = max(1.35, total_sec * (w / total_w))  # min display per line
+            start = t
+            end = min(total_sec, t + dur)
+            f.write(f"{i}\n{ts(start)} --> {ts(end)}\n{ln}\n\n")
+            t = end
+
+
+# =========================
+# 3) CLEAN FINANCE VISUALS
+# =========================
+def build_visual_filter(title: str, srt_path: Path):
+    """
+    Clean finance background (never black) + title for first seconds + captions.
+    Avoids fragile crop/rotate/pixel chains that can produce black frames.
+    """
     title_file = OUT_DIR / "title.txt"
     write_text_file(title_file, title)
 
-    base = "format=yuv420p"
-    overlay_box = "drawbox=x=80:y=180:w=920:h=460:color=black@0.38:t=fill"
+    bg = (
+        "geq=r='18+10*(Y/H)+6*sin(T/2)':"
+        "g='16+10*(X/W)+6*sin(T/3)':"
+        "b='26+12*(Y/H)+6*sin(T/4)',"
+        "noise=alls=5:allf=t+u,"
+        "eq=contrast=1.08:brightness=-0.02:saturation=1.05,"
+        "format=yuv420p"
+    )
 
-    draw_title = (
-    "drawtext=font=DejaVuSans-Bold:"
-    f"textfile={title_file}:reload=0:"
-    "fontcolor=white:fontsize=64:"
-    "x=(w-text_w)/2:y=240"
-)
+    # Title (only first ~3.5s)
+    title_overlay = (
+        "drawbox=x=70:y=150:w=940:h=250:color=black@0.40:t=fill,"
+        "drawtext=font=DejaVuSans-Bold:"
+        f"textfile={title_file}:reload=0:"
+        "fontcolor=white:fontsize=58:"
+        "x=(w-text_w)/2:y=210:"
+        "enable='lt(t,3.5)'"
+    )
 
+    # Captions from SRT (bottom centered)
+    subs = (
+        f"subtitles={srt_path}:"
+        "force_style='FontName=DejaVu Sans,"
+        "FontSize=52,"
+        "PrimaryColour=&HFFFFFF&,"
+        "OutlineColour=&H000000&,"
+        "BorderStyle=1,Outline=3,Shadow=0,"
+        "Alignment=2,MarginV=180'"
+    )
 
-    mc = (
-    "geq=r='14+6*(Y/H)':g='14+7*(X/W)':b='18+8*(Y/H)',"
-    "noise=alls=10:allf=t+u,"
-    "lutrgb=r='(val/48)*48':g='(val/48)*48':b='(val/48)*48',"
-    "eq=contrast=1.10:brightness=-0.015:saturation=1.05,"
-    "scale=iw/14:ih/14:flags=neighbor,"
-    "scale=iw*14:ih*14:flags=neighbor,"
-    "scale=1080:3840:flags=neighbor,"
-    "crop=1080:1920:x=0:y='mod(t*420,ih-1920)',"
-    "rotate='0.006*sin(t*1.1)':c=black@0"
-)
-
-
-    return f"{mc},{base},{overlay_box},{draw_title}"
-
+    return f"{bg},{title_overlay},{subs}"
 
 
 def main():
@@ -134,20 +185,32 @@ def main():
     raw_mp3 = OUT_DIR / "audio_raw.mp3"
     mp3 = OUT_DIR / "audio.mp3"
     mp4 = OUT_DIR / "video.mp4"
+    srt = OUT_DIR / "captions.srt"
 
+    # 1) audio
     make_audio(raw_mp3, text)
     post_process_audio(raw_mp3, mp3)
 
-    vf = build_visual_filter(title)
+    # 2) captions timed to audio duration
+    audio_sec = ffprobe_duration(mp3)
+    write_srt(srt, text, audio_sec)
+
+    # 3) visuals
+    vf = build_visual_filter(title, srt)
+
+    # create a canvas long enough; shortest trims to audio
+    canvas_dur = int(audio_sec) + 2
 
     run([
         "ffmpeg", "-y",
         "-f", "lavfi",
-        "-i", "nullsrc=s=1080x1920:d=120",  # grande; corta no áudio
+        "-i", f"nullsrc=s=1080x1920:d={canvas_dur}",
         "-i", str(mp3),
         "-vf", vf,
+        "-r", "30",
         "-c:v", "libx264",
         "-preset", "veryfast",
+        "-pix_fmt", "yuv420p",
         "-c:a", "aac",
         "-shortest",
         str(mp4)
