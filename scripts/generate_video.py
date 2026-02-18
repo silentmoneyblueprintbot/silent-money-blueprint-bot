@@ -15,7 +15,7 @@ MODE = os.getenv("VIDEO_MODE", "short")  # short | long
 EDGE_VOICE_DEFAULT = os.getenv("EDGE_VOICE", "en-US-AriaNeural")
 
 # Piper (offline) paths (as installed by workflow)
-PIPER_BIN = Path("piper/piper")  # from ./piper_linux_x86_64.tar.gz
+PIPER_BIN = Path("piper/piper/piper")  # from ./piper_linux_x86_64.tar.gz
 PIPER_VOICE = Path("voices/en_US-lessac-medium.onnx")
 
 def run(cmd):
