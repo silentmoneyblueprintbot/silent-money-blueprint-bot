@@ -18,23 +18,18 @@ def run(cmd):
 
 def ssml(text: str) -> str:
     safe = text.replace("&", "and").strip()
-    # pausas mais humanas (ligeiramente maiores)
-    safe = safe.replace("\n", " <break time='320ms'/> ")
+    safe = safe.replace("\n", " <break time='300ms'/> ")
 
     return f"""
-<speak version="1.0"
-  xmlns="http://www.w3.org/2001/10/synthesis"
-  xmlns:mstts="http://www.w3.org/2001/mstts"
-  xml:lang="en-US">
+<speak>
   <voice name="en-US-JennyNeural">
-    <mstts:express-as style="friendly" styledegree="1.15">
-      <prosody rate="-2%" pitch="+1st">
-        {safe}
-      </prosody>
-    </mstts:express-as>
+    <prosody rate="-2%" pitch="+1st">
+      {safe}
+    </prosody>
   </voice>
 </speak>
 """.strip()
+
 
 
 
@@ -112,7 +107,7 @@ def build_visual_filter(title: str, duration_sec: int = 120):
 
     mc = (
     "geq=r='14+6*(Y/H)':g='14+7*(X/W)':b='18+8*(Y/H)',"
-    f"noise=alls=10:allf=t+u:seed={seed},"
+    "noise=alls=10:allf=t+u,"
     "lutrgb=r='(val/48)*48':g='(val/48)*48':b='(val/48)*48',"
     "eq=contrast=1.10:brightness=-0.015:saturation=1.05,"
     "scale=iw/14:ih/14:flags=neighbor,"
