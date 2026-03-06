@@ -6,7 +6,7 @@ import re
 import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 import requests
 
@@ -63,6 +63,10 @@ def write_text_file(path: Path, text: str) -> None:
     path.write_text(safe, encoding="utf-8")
 
 
+def ffmpeg_path(path: Path) -> str:
+    return path.as_posix().replace(":", r"\:")
+
+
 def normalize_text(text: str) -> str:
     replacements = {
         "\u2019": "'",
@@ -76,6 +80,11 @@ def normalize_text(text: str) -> str:
         "â€\x9d": '"',
         "â€“": "-",
         "â€”": "-",
+        "Ã¢â‚¬â„¢": "'",
+        "Ã¢â‚¬Å“": '"',
+        "Ã¢â‚¬\x9d": '"',
+        "Ã¢â‚¬â€œ": "-",
+        "Ã¢â‚¬â€": "-",
     }
     normalized = text
     for bad, good in replacements.items():
@@ -325,9 +334,17 @@ def download_pexels_video(query: str, output_path: Path) -> Optional[Path]:
         return None
 
 
-def build_visual_filter(title: str, srt_path: Path, use_background_video: bool) -> str:
+def build_visual_filter(
+    title: str,
+    srt_path: Path,
+    use_background_video: bool,
+    include_subtitles: bool = True,
+) -> str:
     title_file = OUT_DIR / "title.txt"
     write_text_file(title_file, normalize_text(title))
+
+    title_path = ffmpeg_path(title_file)
+    srt_safe = ffmpeg_path(srt_path)
 
     base_filters: List[str] = []
     if use_background_video:
@@ -345,21 +362,31 @@ def build_visual_filter(title: str, srt_path: Path, use_background_video: bool) 
 
     overlays = [
         "drawbox=x=60:y=130:w=960:h=230:color=black@0.35:t=fill",
-        "drawtext=font=DejaVuSans-Bold:"
-        f"textfile={title_file.as_posix()}:reload=0:"
+        "drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf:"
+        f"textfile='{title_path}':reload=0:"
         "fontcolor=white:fontsize=56:"
         "x=(w-text_w)/2:y=185:enable='lt(t,3.8)'",
         "drawbox=x=0:y=h-350:w=w:h=350:color=black@0.22:t=fill",
-        f"subtitles='{srt_path.as_posix()}':"
-        "force_style='FontName=DejaVu Sans,FontSize=50,PrimaryColour=&HFFFFFF&,"
-        "OutlineColour=&H000000&,BorderStyle=1,Outline=3,Shadow=0,Alignment=2,MarginV=170'",
-        "format=yuv420p",
     ]
 
+    if include_subtitles:
+        overlays.append(
+            f"subtitles='{srt_safe}':"
+            "force_style='FontName=DejaVuSans,FontSize=50,PrimaryColour=&HFFFFFF&,"
+            "OutlineColour=&H000000&,BorderStyle=1,Outline=3,Shadow=0,Alignment=2,MarginV=170'"
+        )
+
+    overlays.append("format=yuv420p")
     return ",".join(base_filters + overlays)
 
 
-def render_video(mp3: Path, mp4: Path, vf: str, canvas_dur: float, background_video: Optional[Path]) -> None:
+def render_ffmpeg(
+    mp3: Path,
+    mp4: Path,
+    vf: str,
+    canvas_dur: float,
+    background_video: Optional[Path],
+) -> None:
     if background_video and background_video.exists():
         run(
             [
@@ -425,6 +452,45 @@ def render_video(mp3: Path, mp4: Path, vf: str, canvas_dur: float, background_vi
     )
 
 
+def render_video(
+    mp3: Path,
+    mp4: Path,
+    title: str,
+    srt: Path,
+    canvas_dur: float,
+    background_video: Optional[Path],
+) -> None:
+    attempts: List[Tuple[bool, bool]] = []
+    has_bg = bool(background_video and background_video.exists())
+    if has_bg:
+        attempts.append((True, True))
+    attempts.append((False, True))
+    if has_bg:
+        attempts.append((True, False))
+    attempts.append((False, False))
+
+    last_error: Optional[subprocess.CalledProcessError] = None
+
+    for use_bg, include_subtitles in attempts:
+        vf = build_visual_filter(
+            title=title,
+            srt_path=srt,
+            use_background_video=use_bg,
+            include_subtitles=include_subtitles,
+        )
+        try:
+            print(f"Render attempt: background={use_bg}, subtitles={include_subtitles}")
+            render_ffmpeg(mp3, mp4, vf, canvas_dur, background_video if use_bg else None)
+            return
+        except subprocess.CalledProcessError as exc:
+            print(f"Render attempt failed: {exc}")
+            last_error = exc
+
+    if last_error is not None:
+        raise last_error
+    raise RuntimeError("Render failed unexpectedly")
+
+
 def main() -> None:
     if MODE == "long":
         title, script, tags = make_long()
@@ -462,9 +528,8 @@ def main() -> None:
             print(f"Using Pexels background for query: {keyword}")
             break
 
-    vf = build_visual_filter(title, srt, use_background_video=bool(picked_bg))
     canvas_dur = audio_sec + 0.8
-    render_video(mp3, mp4, vf, canvas_dur, picked_bg)
+    render_video(mp3, mp4, title, srt, canvas_dur, picked_bg)
 
     Path("meta_title.txt").write_text(title, encoding="utf-8")
     Path("meta_desc.txt").write_text(
