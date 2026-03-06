@@ -352,13 +352,8 @@ def build_visual_filter(
         base_filters.append("crop=1080:1920")
         base_filters.append("eq=contrast=1.07:brightness=0.02:saturation=1.12")
     else:
-        base_filters.append(
-            "geq=r='55+35*(Y/H)+10*sin(T*0.8)':"
-            "g='80+30*(X/W)+12*sin(T*0.7)':"
-            "b='125+20*(Y/H)+10*sin(T*0.5)'"
-        )
-        base_filters.append("noise=alls=10:allf=t+u")
-        base_filters.append("eq=contrast=1.04:brightness=0.03:saturation=1.10")
+        base_filters.append("noise=alls=8:allf=t+u")
+        base_filters.append("eq=contrast=1.05:brightness=0.08:saturation=1.20")
 
     overlays = [
         "drawbox=x=60:y=130:w=960:h=230:color=black@0.35:t=fill",
@@ -366,7 +361,7 @@ def build_visual_filter(
         f"textfile='{title_path}':reload=0:"
         "fontcolor=white:fontsize=56:"
         "x=(w-text_w)/2:y=185:enable='lt(t,3.8)'",
-        "drawbox=x=0:y=h-350:w=w:h=350:color=black@0.22:t=fill",
+        "drawbox=x=0:y=ih-350:w=iw:h=350:color=black@0.22:t=fill",
     ]
 
     if include_subtitles:
@@ -428,7 +423,7 @@ def render_ffmpeg(
             "-f",
             "lavfi",
             "-i",
-            f"nullsrc=s=1080x1920:d={canvas_dur:.2f}",
+            f"color=c=0x1F3B73:s=1080x1920:d={canvas_dur:.2f}",
             "-i",
             str(mp3),
             "-vf",
