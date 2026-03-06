@@ -26,10 +26,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ffmpeg fontconfig fonts-dejavu-core curl tar
 
-      # =========================
-      # Install Piper (offline TTS)
-      # ======================== - name: Install Piper (offline TTS)
-
       - name: Install Piper (offline TTS)
         run: |
           set -euxo pipefail
@@ -37,9 +33,9 @@ jobs:
           cd piper
 
           LATEST_URL=$(curl -s https://api.github.com/repos/rhasspy/piper/releases/latest | \
-          grep browser_download_url | \
-          grep piper_linux_x86_64.tar.gz | \
-          cut -d '"' -f 4)
+            grep browser_download_url | \
+            grep piper_linux_x86_64.tar.gz | \
+            cut -d '"' -f 4)
 
           echo "Downloading: $LATEST_URL"
           curl -fL --retry 5 --retry-delay 2 -o piper_linux_x86_64.tar.gz "$LATEST_URL"
@@ -47,16 +43,10 @@ jobs:
           tar -xzf piper_linux_x86_64.tar.gz
           ls -lah
 
-          # find the binary (works even if folder structure changes)
           PIPER_BIN=$(find . -type f -name piper -perm -111 | head -n 1)
           echo "PIPER_BIN=$PIPER_BIN"
           "$PIPER_BIN" --help | head -n 20
-    
-  
 
-      # =========================
-      # Download Piper voice
-      # =========================
       - name: Download Piper voice (en_US)
         run: |
           set -euxo pipefail
@@ -89,6 +79,9 @@ jobs:
         env:
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
         run: python scripts/generate_video.py
+
+      - name: Validate generated artifacts
+        run: python scripts/validation.py --strict
 
       - name: Upload to YouTube
         env:

@@ -1,0 +1,21 @@
+{
+  "ok": false,
+  "strict": false,
+  "errors": [
+    "Script is too short or empty.",
+    "Title is too short.",
+    "Missing required file: out\\audio.mp3",
+    "Missing required file: out\\video.mp4",
+    "Missing required file: meta_title.txt",
+    "Missing required file: meta_desc.txt"
+  ],
+  "warnings": [
+    "Description does not include #shorts."
+  ],
+  "metrics": {
+    "audio_seconds": 0.0,
+    "video_seconds": 0.0,
+    "video_black_ratio": 1.0,
+    "script_word_count": 0
+  }
+}

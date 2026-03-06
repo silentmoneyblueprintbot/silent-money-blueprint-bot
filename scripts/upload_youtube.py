@@ -1,16 +1,40 @@
+from __future__ import annotations
+
 import json
 import os
 from pathlib import Path
+
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
+from validation import assert_ready_for_upload
+
 SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
 
-def main():
+
+def require_file(path: Path) -> None:
+    if not path.exists():
+        raise FileNotFoundError(f"Missing required file: {path}")
+
+
+def main() -> None:
+    assert_ready_for_upload()
+
     refresh_token = os.environ["YOUTUBE_REFRESH_TOKEN"]
-    data = json.loads(Path("client_secret.json").read_text())
+    data = json.loads(Path("client_secret.json").read_text(encoding="utf-8"))
     installed = data["installed"]
+
+    title_path = Path("meta_title.txt")
+    desc_path = Path("meta_desc.txt")
+    video_path = Path("out/video.mp4")
+
+    require_file(title_path)
+    require_file(desc_path)
+    require_file(video_path)
+
+    title = title_path.read_text(encoding="utf-8").strip()
+    description = desc_path.read_text(encoding="utf-8").strip()
 
     creds = Credentials(
         token=None,
@@ -27,17 +51,18 @@ def main():
         part="snippet,status",
         body={
             "snippet": {
-                "title": Path("meta_title.txt").read_text(),
-                "description": Path("meta_desc.txt").read_text(),
-                "categoryId": "22"
+                "title": title,
+                "description": description,
+                "categoryId": "22",
             },
-            "status": {"privacyStatus": "public"}
+            "status": {"privacyStatus": "public"},
         },
-        media_body=MediaFileUpload("out/video.mp4")
+        media_body=MediaFileUpload(str(video_path)),
     )
 
     response = request.execute()
     print("Uploaded:", response["id"])
+
 
 if __name__ == "__main__":
     main()
