@@ -8,6 +8,9 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    env:
+      TIKTOK_ACCESS_TOKEN: ${{ secrets.TIKTOK_ACCESS_TOKEN }}
+      TIKTOK_PRIVACY_LEVEL: ${{ vars.TIKTOK_PRIVACY_LEVEL }}
 
     steps:
       - uses: actions/checkout@v4
@@ -89,8 +92,6 @@ jobs:
         run: python scripts/upload_youtube.py
 
       - name: Upload to TikTok (optional)
-        if: ${{ secrets.TIKTOK_ACCESS_TOKEN != '' }}
-        env:
-          TIKTOK_ACCESS_TOKEN: ${{ secrets.TIKTOK_ACCESS_TOKEN }}
-          TIKTOK_PRIVACY_LEVEL: ${{ vars.TIKTOK_PRIVACY_LEVEL }}
+        if: ${{ env.TIKTOK_ACCESS_TOKEN != '' }}
         run: python scripts/upload_tiktok.py
+
