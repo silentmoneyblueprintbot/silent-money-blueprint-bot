@@ -5,6 +5,10 @@ on:
     - cron: "0 10 * * *"   # todos os dias 10:00 UTC
   workflow_dispatch: {}
 
+# Necessário para o passo de "commit-back" do histórico (keepalive + de-dup).
+permissions:
+  contents: write
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -29,52 +33,45 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ffmpeg fontconfig fonts-dejavu-core curl tar
 
-      - name: Install Piper (offline TTS)
+      # CORREÇÃO PRINCIPAL: já NÃO chamamos a API do GitHub (que apanha rate-limit
+      # nos IPs partilhados do Actions e fazia o job inteiro rebentar aqui).
+      # Fixamos um release estável e conhecido do Piper por URL direto.
+      # continue-on-error: o Piper é apenas o fallback de voz — se falhar, o job
+      # continua e o edge-tts (voz neural, principal) trata do áudio na mesma.
+      - name: Install Piper (offline TTS fallback)
+        continue-on-error: true
         run: |
           set -euxo pipefail
-          mkdir -p piper
-          cd piper
-
-          LATEST_URL=$(curl -s https://api.github.com/repos/rhasspy/piper/releases/latest | \
-            grep browser_download_url | \
-            grep piper_linux_x86_64.tar.gz | \
-            cut -d '"' -f 4)
-
-          echo "Downloading: $LATEST_URL"
-          curl -fL --retry 5 --retry-delay 2 -o piper_linux_x86_64.tar.gz "$LATEST_URL"
-
+          mkdir -p piper && cd piper
+          PIPER_URL="https://github.com/rhasspy/piper/releases/download/2023.11.14-2/piper_linux_x86_64.tar.gz"
+          curl -fL --retry 5 --retry-delay 3 -o piper_linux_x86_64.tar.gz "$PIPER_URL"
           tar -xzf piper_linux_x86_64.tar.gz
-          ls -lah
-
           PIPER_BIN=$(find . -type f -name piper -perm -111 | head -n 1)
           echo "PIPER_BIN=$PIPER_BIN"
-          "$PIPER_BIN" --help | head -n 20
+          "$PIPER_BIN" --help | head -n 5 || true
 
       - name: Download Piper voice (en_US)
+        continue-on-error: true
         run: |
           set -euxo pipefail
-          mkdir -p voices
-          cd voices
-
-          curl -fL --retry 5 --retry-delay 2 -o en_US-lessac-medium.onnx \
-            https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/lessac/medium/en_US-lessac-medium.onnx
-
-          curl -fL --retry 5 --retry-delay 2 -o en_US-lessac-medium.onnx.json \
-            https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/lessac/medium/en_US-lessac-medium.onnx.json
-
+          mkdir -p voices && cd voices
+          BASE="https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/lessac/medium"
+          curl -fL --retry 5 --retry-delay 3 -o en_US-lessac-medium.onnx      "$BASE/en_US-lessac-medium.onnx"
+          curl -fL --retry 5 --retry-delay 3 -o en_US-lessac-medium.onnx.json "$BASE/en_US-lessac-medium.onnx.json"
           ls -lah
 
+      # Segurança: escrevemos o secret via env em vez de o interpolar diretamente
+      # na linha de comando (evita qualquer risco de exposição em logs).
       - name: Write OAuth secret to file
-        run: |
-          echo '${{ secrets.YOUTUBE_CLIENT_SECRET_JSON }}' > client_secret.json
+        env:
+          CLIENT_SECRET_JSON: ${{ secrets.YOUTUBE_CLIENT_SECRET_JSON }}
+        run: printf '%s' "$CLIENT_SECRET_JSON" > client_secret.json
 
       - name: Decide video mode (short daily, long on Saturday)
         run: |
           if [ "$(date -u +%u)" = "6" ]; then
-            echo "Saturday => long"
             echo "VIDEO_MODE=long" >> $GITHUB_ENV
           else
-            echo "Daily => short"
             echo "VIDEO_MODE=short" >> $GITHUB_ENV
           fi
 
@@ -95,3 +92,19 @@ jobs:
         if: ${{ env.TIKTOK_ACCESS_TOKEN != '' }}
         run: python scripts/upload_tiktok.py
 
+      # KEEPALIVE + MEMÓRIA DE DE-DUP:
+      # 1) Persiste o content_history.json para o de-dup de temas funcionar a longo prazo.
+      # 2) Cada commit reinicia o contador de inatividade de 60 dias do GitHub,
+      #    impedindo que o cron volte a ser DESATIVADO automaticamente.
+      - name: Persist content history (keepalive + de-dup memory)
+        if: always()
+        run: |
+          git config user.name "smbb-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add out/content_history.json out/validation_report.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Sem alterações para commit."
+          else
+            git commit -m "chore: update content history [skip ci]"
+            git push
+          fi
