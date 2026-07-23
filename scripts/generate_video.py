@@ -4,6 +4,7 @@ import os
 import random
 import re
 import subprocess
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import List, Optional, Tuple
@@ -25,7 +26,7 @@ EDGE_RATE = os.getenv("EDGE_RATE", "+4%")
 EDGE_VOLUME = os.getenv("EDGE_VOLUME", "+0%")
 
 PIPER_BIN = Path("piper/piper/piper")
-PIPER_VOICE = Path("voices/en_US-lessac-medium.onnx")
+PIPER_VOICE = Path("voices/en_US-lessac-high.onnx")
 
 
 def run(cmd: List[str]) -> None:
@@ -121,25 +122,36 @@ def make_audio_edge(mp3_path: Path, text: str) -> str:
     rng = random.Random(day_seed)
     voice = os.getenv("EDGE_VOICE") or rng.choice(voices) or EDGE_VOICE_DEFAULT
 
-    run(
-        [
-            "python",
-            "-m",
-            "edge_tts",
-            "--voice",
-            voice,
-            "--rate",
-            EDGE_RATE,
-            "--volume",
-            EDGE_VOLUME,
-            "--text",
-            text,
-            "--write-media",
-            str(mp3_path),
-        ]
-    )
-    print(f"Audio via edge-tts ({voice}, rate={EDGE_RATE}, volume={EDGE_VOLUME})")
-    return voice
+    cmd = [
+        "python",
+        "-m",
+        "edge_tts",
+        "--voice",
+        voice,
+        "--rate",
+        EDGE_RATE,
+        "--volume",
+        EDGE_VOLUME,
+        "--text",
+        text,
+        "--write-media",
+        str(mp3_path),
+    ]
+
+    last_exc: Optional[Exception] = None
+    for attempt in range(1, 4):
+        try:
+            run(cmd)
+            if mp3_path.exists() and mp3_path.stat().st_size > 1024:
+                print(f"Audio via edge-tts ({voice}, rate={EDGE_RATE}, attempt {attempt})")
+                return voice
+            raise RuntimeError("edge-tts produced an empty file")
+        except Exception as exc:  # noqa: BLE001
+            last_exc = exc
+            print(f"edge-tts attempt {attempt} failed: {exc}")
+            time.sleep(2 * attempt)
+
+    raise RuntimeError(f"edge-tts failed after 3 attempts: {last_exc}")
 
 
 def make_audio_piper(wav_path: Path, text: str) -> None:
@@ -423,7 +435,11 @@ def render_ffmpeg(
             "-f",
             "lavfi",
             "-i",
-            f"color=c=0x1F3B73:s=1080x1920:d={canvas_dur:.2f}",
+            (
+                "gradients=s=1080x1920:c0=0x0E2447:c1=0x2E63B0:"
+                "x0=0:y0=0:x1=1080:y1=1920:type=linear:speed=0.012:"
+                f"d={canvas_dur:.2f}:r=30"
+            ),
             "-i",
             str(mp3),
             "-vf",
