@@ -1,14 +1,17 @@
 {
   "topics": [
     "Index investing",
-    "Retirement compounding"
+    "Retirement compounding",
+    "Budgeting systems"
   ],
   "formats": [
     "quick_tip",
-    "comparison"
+    "comparison",
+    "rich_vs_poor_habit"
   ],
   "hooks": [
     "Try this 30-second money move today.",
-    "This small choice quietly decides if you build wealth."
+    "This small choice quietly decides if you build wealth.",
+    "One habit gap separates progress from paycheck stress."
   ]
 }
