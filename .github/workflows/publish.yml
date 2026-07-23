@@ -55,9 +55,9 @@ jobs:
         run: |
           set -euxo pipefail
           mkdir -p voices && cd voices
-          BASE="https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/lessac/medium"
-          curl -fL --retry 5 --retry-delay 3 -o en_US-lessac-medium.onnx      "$BASE/en_US-lessac-medium.onnx"
-          curl -fL --retry 5 --retry-delay 3 -o en_US-lessac-medium.onnx.json "$BASE/en_US-lessac-medium.onnx.json"
+          BASE="https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/lessac/high"
+          curl -fL --retry 5 --retry-delay 3 -o en_US-lessac-high.onnx      "$BASE/en_US-lessac-high.onnx"
+          curl -fL --retry 5 --retry-delay 3 -o en_US-lessac-high.onnx.json "$BASE/en_US-lessac-high.onnx.json"
           ls -lah
 
       # Segurança: escrevemos o secret via env em vez de o interpolar diretamente
