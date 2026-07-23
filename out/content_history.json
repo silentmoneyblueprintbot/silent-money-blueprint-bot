@@ -1,11 +1,14 @@
 {
   "topics": [
-    "Index investing"
+    "Index investing",
+    "Retirement compounding"
   ],
   "formats": [
-    "quick_tip"
+    "quick_tip",
+    "comparison"
   ],
   "hooks": [
-    "Try this 30-second money move today."
+    "Try this 30-second money move today.",
+    "This small choice quietly decides if you build wealth."
   ]
 }
