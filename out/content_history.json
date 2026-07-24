@@ -2,16 +2,19 @@
   "topics": [
     "Index investing",
     "Retirement compounding",
-    "Budgeting systems"
+    "Budgeting systems",
+    "Emergency fund target"
   ],
   "formats": [
     "quick_tip",
     "comparison",
-    "rich_vs_poor_habit"
+    "rich_vs_poor_habit",
+    "money_curiosity"
   ],
   "hooks": [
     "Try this 30-second money move today.",
     "This small choice quietly decides if you build wealth.",
-    "One habit gap separates progress from paycheck stress."
+    "One habit gap separates progress from paycheck stress.",
+    "Most people hear this too late."
   ]
 }
