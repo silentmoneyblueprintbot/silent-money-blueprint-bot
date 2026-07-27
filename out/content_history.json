@@ -10,7 +10,8 @@
     "Credit card debt",
     "Lifestyle inflation",
     "Lifestyle inflation",
-    "Budgeting systems"
+    "Budgeting systems",
+    "Emergency fund target"
   ],
   "formats": [
     "quick_tip",
@@ -23,7 +24,8 @@
     "money_alert",
     "mini_case",
     "myth_vs_reality",
-    "money_mistake"
+    "money_mistake",
+    "quick_tip"
   ],
   "hooks": [
     "Try this 30-second money move today.",
@@ -36,6 +38,7 @@
     "Money alert: this risk looks harmless until it is expensive.",
     "A quick story that shows why systems beat motivation.",
     "This finance myth sounds smart, but hurts your future.",
-    "Quick reality check: this mistake keeps salaries feeling small."
+    "Quick reality check: this mistake keeps salaries feeling small.",
+    "One simple tweak can fix your cash flow this month."
   ]
 }
