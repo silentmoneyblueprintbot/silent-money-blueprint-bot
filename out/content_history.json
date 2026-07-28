@@ -11,7 +11,8 @@
     "Lifestyle inflation",
     "Lifestyle inflation",
     "Budgeting systems",
-    "Emergency fund target"
+    "Emergency fund target",
+    "Index investing"
   ],
   "formats": [
     "quick_tip",
@@ -25,7 +26,8 @@
     "mini_case",
     "myth_vs_reality",
     "money_mistake",
-    "quick_tip"
+    "quick_tip",
+    "money_curiosity"
   ],
   "hooks": [
     "Try this 30-second money move today.",
@@ -39,6 +41,7 @@
     "A quick story that shows why systems beat motivation.",
     "This finance myth sounds smart, but hurts your future.",
     "Quick reality check: this mistake keeps salaries feeling small.",
-    "One simple tweak can fix your cash flow this month."
+    "One simple tweak can fix your cash flow this month.",
+    "Most people hear this too late."
   ]
 }
