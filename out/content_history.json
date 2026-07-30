@@ -13,7 +13,8 @@
     "Budgeting systems",
     "Emergency fund target",
     "Index investing",
-    "Retirement compounding"
+    "Retirement compounding",
+    "Credit card debt"
   ],
   "formats": [
     "quick_tip",
@@ -29,7 +30,8 @@
     "money_mistake",
     "quick_tip",
     "money_curiosity",
-    "comparison"
+    "comparison",
+    "mini_case"
   ],
   "hooks": [
     "Try this 30-second money move today.",
@@ -45,6 +47,7 @@
     "Quick reality check: this mistake keeps salaries feeling small.",
     "One simple tweak can fix your cash flow this month.",
     "Most people hear this too late.",
-    "Two money paths, same income, very different outcome."
+    "Two money paths, same income, very different outcome.",
+    "A quick story that shows why systems beat motivation."
   ]
 }
