@@ -14,7 +14,8 @@
     "Emergency fund target",
     "Index investing",
     "Retirement compounding",
-    "Credit card debt"
+    "Credit card debt",
+    "Emergency fund target"
   ],
   "formats": [
     "quick_tip",
@@ -31,7 +32,8 @@
     "quick_tip",
     "money_curiosity",
     "comparison",
-    "mini_case"
+    "mini_case",
+    "simple_explainer"
   ],
   "hooks": [
     "Try this 30-second money move today.",
@@ -48,6 +50,7 @@
     "One simple tweak can fix your cash flow this month.",
     "Most people hear this too late.",
     "Two money paths, same income, very different outcome.",
-    "A quick story that shows why systems beat motivation."
+    "A quick story that shows why systems beat motivation.",
+    "In plain words, this concept changes how fast money grows."
   ]
 }
