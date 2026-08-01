@@ -1,7 +1,5 @@
 {
   "topics": [
-    "Index investing",
-    "Retirement compounding",
     "Budgeting systems",
     "Emergency fund target",
     "Credit card debt",
@@ -15,11 +13,15 @@
     "Index investing",
     "Retirement compounding",
     "Credit card debt",
-    "Emergency fund target"
+    "Emergency fund target",
+    "Lifestyle inflation",
+    "Lifestyle inflation",
+    "Lifestyle inflation",
+    "Lifestyle inflation",
+    "Lifestyle inflation",
+    "Lifestyle inflation"
   ],
   "formats": [
-    "quick_tip",
-    "comparison",
     "rich_vs_poor_habit",
     "money_curiosity",
     "mini_case",
@@ -33,7 +35,13 @@
     "money_curiosity",
     "comparison",
     "mini_case",
-    "simple_explainer"
+    "simple_explainer",
+    "money_mistake",
+    "rich_vs_poor_habit",
+    "rich_vs_poor_habit",
+    "money_alert",
+    "money_alert",
+    "money_alert"
   ],
   "hooks": [
     "Try this 30-second money move today.",
@@ -51,6 +59,12 @@
     "Most people hear this too late.",
     "Two money paths, same income, very different outcome.",
     "A quick story that shows why systems beat motivation.",
-    "In plain words, this concept changes how fast money grows."
+    "In plain words, this concept changes how fast money grows.",
+    "Quick reality check: this mistake keeps salaries feeling small.",
+    "Rich habit vs poor habit, same salary.",
+    "Rich habit vs poor habit, same salary.",
+    "Money alert: this risk looks harmless until it is expensive.",
+    "Money alert: this risk looks harmless until it is expensive.",
+    "Money alert: this risk looks harmless until it is expensive."
   ]
 }
