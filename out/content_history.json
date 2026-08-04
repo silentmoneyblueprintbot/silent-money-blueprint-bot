@@ -3,7 +3,6 @@
     "Credit card debt",
     "Credit card debt",
     "Credit card debt",
-    "Credit card debt",
     "Lifestyle inflation",
     "Lifestyle inflation",
     "Budgeting systems",
@@ -19,10 +18,10 @@
     "Lifestyle inflation",
     "Lifestyle inflation",
     "Credit card debt",
-    "Retirement compounding"
+    "Retirement compounding",
+    "Index investing"
   ],
   "formats": [
-    "mini_case",
     "money_mistake",
     "money_alert",
     "money_alert",
@@ -41,7 +40,8 @@
     "money_alert",
     "money_alert",
     "myth_vs_reality",
-    "money_curiosity"
+    "money_curiosity",
+    "comparison"
   ],
   "hooks": [
     "Try this 30-second money move today.",
@@ -67,6 +67,7 @@
     "Money alert: this risk looks harmless until it is expensive.",
     "Money alert: this risk looks harmless until it is expensive.",
     "This finance myth sounds smart, but hurts your future.",
-    "Most people hear this too late."
+    "Most people hear this too late.",
+    "Two money paths, same income, very different outcome."
   ]
 }
