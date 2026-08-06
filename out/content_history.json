@@ -1,7 +1,6 @@
 {
   "topics": [
     "Credit card debt",
-    "Credit card debt",
     "Lifestyle inflation",
     "Lifestyle inflation",
     "Budgeting systems",
@@ -19,10 +18,10 @@
     "Credit card debt",
     "Retirement compounding",
     "Index investing",
-    "Emergency fund target"
+    "Emergency fund target",
+    "Budgeting systems"
   ],
   "formats": [
-    "money_alert",
     "money_alert",
     "mini_case",
     "myth_vs_reality",
@@ -41,7 +40,8 @@
     "myth_vs_reality",
     "money_curiosity",
     "comparison",
-    "quick_tip"
+    "quick_tip",
+    "rich_vs_poor_habit"
   ],
   "hooks": [
     "Try this 30-second money move today.",
@@ -69,6 +69,7 @@
     "This finance myth sounds smart, but hurts your future.",
     "Most people hear this too late.",
     "Two money paths, same income, very different outcome.",
-    "Try this 30-second money move today."
+    "Try this 30-second money move today.",
+    "Rich habit vs poor habit, same salary."
   ]
 }
