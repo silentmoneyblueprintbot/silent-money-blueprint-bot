@@ -1,6 +1,5 @@
 {
   "topics": [
-    "Credit card debt",
     "Lifestyle inflation",
     "Lifestyle inflation",
     "Budgeting systems",
@@ -19,10 +18,10 @@
     "Retirement compounding",
     "Index investing",
     "Emergency fund target",
-    "Budgeting systems"
+    "Budgeting systems",
+    "Credit card debt"
   ],
   "formats": [
-    "money_alert",
     "mini_case",
     "myth_vs_reality",
     "money_mistake",
@@ -41,7 +40,8 @@
     "money_curiosity",
     "comparison",
     "quick_tip",
-    "rich_vs_poor_habit"
+    "rich_vs_poor_habit",
+    "money_alert"
   ],
   "hooks": [
     "Try this 30-second money move today.",
@@ -70,6 +70,7 @@
     "Most people hear this too late.",
     "Two money paths, same income, very different outcome.",
     "Try this 30-second money move today.",
-    "Rich habit vs poor habit, same salary."
+    "Rich habit vs poor habit, same salary.",
+    "If you ignore this, your future self pays the bill."
   ]
 }
