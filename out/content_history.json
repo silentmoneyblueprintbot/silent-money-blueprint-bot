@@ -1,11 +1,5 @@
 {
   "topics": [
-    "Lifestyle inflation",
-    "Lifestyle inflation",
-    "Budgeting systems",
-    "Emergency fund target",
-    "Index investing",
-    "Retirement compounding",
     "Credit card debt",
     "Emergency fund target",
     "Lifestyle inflation",
@@ -19,15 +13,15 @@
     "Index investing",
     "Emergency fund target",
     "Budgeting systems",
-    "Credit card debt"
+    "Credit card debt",
+    "Lifestyle inflation",
+    "Lifestyle inflation",
+    "Lifestyle inflation",
+    "Lifestyle inflation",
+    "Lifestyle inflation",
+    "Lifestyle inflation"
   ],
   "formats": [
-    "mini_case",
-    "myth_vs_reality",
-    "money_mistake",
-    "quick_tip",
-    "money_curiosity",
-    "comparison",
     "mini_case",
     "simple_explainer",
     "money_mistake",
@@ -41,7 +35,13 @@
     "comparison",
     "quick_tip",
     "rich_vs_poor_habit",
-    "money_alert"
+    "money_alert",
+    "mini_case",
+    "money_curiosity",
+    "money_mistake",
+    "money_curiosity",
+    "money_mistake",
+    "money_mistake"
   ],
   "hooks": [
     "Try this 30-second money move today.",
@@ -71,6 +71,12 @@
     "Two money paths, same income, very different outcome.",
     "Try this 30-second money move today.",
     "Rich habit vs poor habit, same salary.",
-    "If you ignore this, your future self pays the bill."
+    "If you ignore this, your future self pays the bill.",
+    "A quick story that shows why systems beat motivation.",
+    "Finance curiosity that can save you years.",
+    "Quick reality check: this mistake keeps salaries feeling small.",
+    "Finance curiosity that can save you years.",
+    "Quick reality check: this mistake keeps salaries feeling small.",
+    "Quick reality check: this mistake keeps salaries feeling small."
   ]
 }
