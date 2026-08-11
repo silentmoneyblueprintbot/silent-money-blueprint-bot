@@ -5,7 +5,6 @@
     "Lifestyle inflation",
     "Lifestyle inflation",
     "Lifestyle inflation",
-    "Lifestyle inflation",
     "Credit card debt",
     "Retirement compounding",
     "Index investing",
@@ -19,10 +18,10 @@
     "Lifestyle inflation",
     "Lifestyle inflation",
     "Budgeting systems",
-    "Retirement compounding"
+    "Retirement compounding",
+    "Index investing"
   ],
   "formats": [
-    "money_mistake",
     "rich_vs_poor_habit",
     "rich_vs_poor_habit",
     "money_alert",
@@ -41,7 +40,8 @@
     "money_mistake",
     "money_mistake",
     "money_alert",
-    "quick_tip"
+    "quick_tip",
+    "mini_case"
   ],
   "hooks": [
     "Try this 30-second money move today.",
@@ -79,6 +79,7 @@
     "Quick reality check: this mistake keeps salaries feeling small.",
     "Quick reality check: this mistake keeps salaries feeling small.",
     "If you ignore this, your future self pays the bill.",
-    "One simple tweak can fix your cash flow this month."
+    "One simple tweak can fix your cash flow this month.",
+    "Real mini case, real numbers, real lesson."
   ]
 }
