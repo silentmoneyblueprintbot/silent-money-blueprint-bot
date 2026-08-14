@@ -2,7 +2,6 @@
   "topics": [
     "Lifestyle inflation",
     "Lifestyle inflation",
-    "Lifestyle inflation",
     "Credit card debt",
     "Retirement compounding",
     "Index investing",
@@ -19,10 +18,10 @@
     "Retirement compounding",
     "Index investing",
     "Credit card debt",
-    "Emergency fund target"
+    "Emergency fund target",
+    "Index investing"
   ],
   "formats": [
-    "money_alert",
     "money_alert",
     "money_alert",
     "myth_vs_reality",
@@ -41,7 +40,8 @@
     "quick_tip",
     "mini_case",
     "comparison",
-    "simple_explainer"
+    "simple_explainer",
+    "myth_vs_reality"
   ],
   "hooks": [
     "Try this 30-second money move today.",
@@ -82,6 +82,7 @@
     "One simple tweak can fix your cash flow this month.",
     "Real mini case, real numbers, real lesson.",
     "Two money paths, same income, very different outcome.",
-    "Let me explain liquidity without finance jargon."
+    "Let me explain liquidity without finance jargon.",
+    "This finance myth sounds smart, but hurts your future."
   ]
 }
