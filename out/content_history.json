@@ -1,11 +1,5 @@
 {
   "topics": [
-    "Lifestyle inflation",
-    "Lifestyle inflation",
-    "Credit card debt",
-    "Retirement compounding",
-    "Index investing",
-    "Emergency fund target",
     "Budgeting systems",
     "Credit card debt",
     "Lifestyle inflation",
@@ -19,15 +13,15 @@
     "Index investing",
     "Credit card debt",
     "Emergency fund target",
-    "Index investing"
+    "Index investing",
+    "Lifestyle inflation",
+    "Lifestyle inflation",
+    "Lifestyle inflation",
+    "Lifestyle inflation",
+    "Lifestyle inflation",
+    "Lifestyle inflation"
   ],
   "formats": [
-    "money_alert",
-    "money_alert",
-    "myth_vs_reality",
-    "money_curiosity",
-    "comparison",
-    "quick_tip",
     "rich_vs_poor_habit",
     "money_alert",
     "mini_case",
@@ -41,15 +35,15 @@
     "mini_case",
     "comparison",
     "simple_explainer",
-    "myth_vs_reality"
+    "myth_vs_reality",
+    "money_mistake",
+    "money_alert",
+    "money_mistake",
+    "rich_vs_poor_habit",
+    "money_curiosity",
+    "rich_vs_poor_habit"
   ],
   "hooks": [
-    "Try this 30-second money move today.",
-    "This small choice quietly decides if you build wealth.",
-    "One habit gap separates progress from paycheck stress.",
-    "Most people hear this too late.",
-    "A quick story that shows why systems beat motivation.",
-    "Quick reality check: this mistake keeps salaries feeling small.",
     "Money alert: this risk looks harmless until it is expensive.",
     "Money alert: this risk looks harmless until it is expensive.",
     "A quick story that shows why systems beat motivation.",
@@ -83,6 +77,12 @@
     "Real mini case, real numbers, real lesson.",
     "Two money paths, same income, very different outcome.",
     "Let me explain liquidity without finance jargon.",
-    "This finance myth sounds smart, but hurts your future."
+    "This finance myth sounds smart, but hurts your future.",
+    "Quick reality check: this mistake keeps salaries feeling small.",
+    "Money alert: this risk looks harmless until it is expensive.",
+    "Quick reality check: this mistake keeps salaries feeling small.",
+    "One habit gap separates progress from paycheck stress.",
+    "Finance curiosity that can save you years.",
+    "One habit gap separates progress from paycheck stress."
   ]
 }
