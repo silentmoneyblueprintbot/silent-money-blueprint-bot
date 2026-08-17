@@ -1,6 +1,5 @@
 {
   "topics": [
-    "Credit card debt",
     "Lifestyle inflation",
     "Lifestyle inflation",
     "Lifestyle inflation",
@@ -19,10 +18,10 @@
     "Lifestyle inflation",
     "Lifestyle inflation",
     "Lifestyle inflation",
-    "Emergency fund target"
+    "Emergency fund target",
+    "Credit card debt"
   ],
   "formats": [
-    "money_alert",
     "mini_case",
     "money_curiosity",
     "money_mistake",
@@ -41,10 +40,10 @@
     "rich_vs_poor_habit",
     "money_curiosity",
     "rich_vs_poor_habit",
-    "mini_case"
+    "mini_case",
+    "simple_explainer"
   ],
   "hooks": [
-    "Money alert: this risk looks harmless until it is expensive.",
     "A quick story that shows why systems beat motivation.",
     "This finance myth sounds smart, but hurts your future.",
     "Quick reality check: this mistake keeps salaries feeling small.",
@@ -83,6 +82,7 @@
     "One habit gap separates progress from paycheck stress.",
     "Finance curiosity that can save you years.",
     "One habit gap separates progress from paycheck stress.",
-    "Real mini case, real numbers, real lesson."
+    "Real mini case, real numbers, real lesson.",
+    "Let me explain APR without finance jargon."
   ]
 }
