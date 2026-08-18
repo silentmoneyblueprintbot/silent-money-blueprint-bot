@@ -5,7 +5,6 @@
     "Lifestyle inflation",
     "Lifestyle inflation",
     "Lifestyle inflation",
-    "Lifestyle inflation",
     "Budgeting systems",
     "Retirement compounding",
     "Index investing",
@@ -19,10 +18,10 @@
     "Lifestyle inflation",
     "Lifestyle inflation",
     "Emergency fund target",
-    "Credit card debt"
+    "Credit card debt",
+    "Retirement compounding"
   ],
   "formats": [
-    "mini_case",
     "money_curiosity",
     "money_mistake",
     "money_curiosity",
@@ -41,10 +40,10 @@
     "money_curiosity",
     "rich_vs_poor_habit",
     "mini_case",
-    "simple_explainer"
+    "simple_explainer",
+    "myth_vs_reality"
   ],
   "hooks": [
-    "A quick story that shows why systems beat motivation.",
     "This finance myth sounds smart, but hurts your future.",
     "Quick reality check: this mistake keeps salaries feeling small.",
     "One simple tweak can fix your cash flow this month.",
@@ -83,6 +82,7 @@
     "Finance curiosity that can save you years.",
     "One habit gap separates progress from paycheck stress.",
     "Real mini case, real numbers, real lesson.",
-    "Let me explain APR without finance jargon."
+    "Let me explain APR without finance jargon.",
+    "This finance myth sounds smart, but hurts your future."
   ]
 }
