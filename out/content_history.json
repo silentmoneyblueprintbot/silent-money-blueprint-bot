@@ -1,6 +1,5 @@
 {
   "topics": [
-    "Emergency fund target",
     "Index investing",
     "Lifestyle inflation",
     "Lifestyle inflation",
@@ -19,10 +18,10 @@
     "Retirement compounding",
     "Budgeting systems",
     "Lifestyle inflation",
-    "Lifestyle inflation"
+    "Lifestyle inflation",
+    "Index investing"
   ],
   "formats": [
-    "simple_explainer",
     "myth_vs_reality",
     "money_mistake",
     "money_alert",
@@ -41,10 +40,10 @@
     "comparison",
     "comparison",
     "mini_case",
-    "money_alert"
+    "money_alert",
+    "simple_explainer"
   ],
   "hooks": [
-    "Rich habit vs poor habit, same salary.",
     "Money alert: this risk looks harmless until it is expensive.",
     "Money alert: this risk looks harmless until it is expensive.",
     "Money alert: this risk looks harmless until it is expensive.",
@@ -83,6 +82,7 @@
     "This small choice quietly decides if you build wealth.",
     "This small choice quietly decides if you build wealth.",
     "Real mini case, real numbers, real lesson.",
-    "If you ignore this, your future self pays the bill."
+    "If you ignore this, your future self pays the bill.",
+    "In plain words, this concept changes how fast money grows."
   ]
 }
