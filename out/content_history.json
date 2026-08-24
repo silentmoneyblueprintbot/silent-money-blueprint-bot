@@ -1,6 +1,5 @@
 {
   "topics": [
-    "Index investing",
     "Lifestyle inflation",
     "Lifestyle inflation",
     "Lifestyle inflation",
@@ -19,10 +18,10 @@
     "Budgeting systems",
     "Lifestyle inflation",
     "Lifestyle inflation",
-    "Index investing"
+    "Index investing",
+    "Credit card debt"
   ],
   "formats": [
-    "myth_vs_reality",
     "money_mistake",
     "money_alert",
     "money_mistake",
@@ -41,10 +40,10 @@
     "comparison",
     "mini_case",
     "money_alert",
-    "simple_explainer"
+    "simple_explainer",
+    "quick_tip"
   ],
   "hooks": [
-    "Money alert: this risk looks harmless until it is expensive.",
     "Money alert: this risk looks harmless until it is expensive.",
     "Money alert: this risk looks harmless until it is expensive.",
     "This finance myth sounds smart, but hurts your future.",
@@ -83,6 +82,7 @@
     "This small choice quietly decides if you build wealth.",
     "Real mini case, real numbers, real lesson.",
     "If you ignore this, your future self pays the bill.",
-    "In plain words, this concept changes how fast money grows."
+    "In plain words, this concept changes how fast money grows.",
+    "One simple tweak can fix your cash flow this month."
   ]
 }
