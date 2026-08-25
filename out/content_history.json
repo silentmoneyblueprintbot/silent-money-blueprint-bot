@@ -5,7 +5,6 @@
     "Lifestyle inflation",
     "Lifestyle inflation",
     "Lifestyle inflation",
-    "Lifestyle inflation",
     "Emergency fund target",
     "Credit card debt",
     "Retirement compounding",
@@ -19,10 +18,10 @@
     "Lifestyle inflation",
     "Lifestyle inflation",
     "Index investing",
-    "Credit card debt"
+    "Credit card debt",
+    "Emergency fund target"
   ],
   "formats": [
-    "money_mistake",
     "money_alert",
     "money_mistake",
     "rich_vs_poor_habit",
@@ -41,10 +40,10 @@
     "mini_case",
     "money_alert",
     "simple_explainer",
-    "quick_tip"
+    "quick_tip",
+    "money_curiosity"
   ],
   "hooks": [
-    "Money alert: this risk looks harmless until it is expensive.",
     "Money alert: this risk looks harmless until it is expensive.",
     "This finance myth sounds smart, but hurts your future.",
     "Most people hear this too late.",
@@ -83,6 +82,7 @@
     "Real mini case, real numbers, real lesson.",
     "If you ignore this, your future self pays the bill.",
     "In plain words, this concept changes how fast money grows.",
-    "One simple tweak can fix your cash flow this month."
+    "One simple tweak can fix your cash flow this month.",
+    "Most people hear this too late."
   ]
 }
