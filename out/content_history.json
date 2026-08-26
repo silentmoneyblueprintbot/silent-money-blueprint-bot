@@ -4,7 +4,6 @@
     "Lifestyle inflation",
     "Lifestyle inflation",
     "Lifestyle inflation",
-    "Lifestyle inflation",
     "Emergency fund target",
     "Credit card debt",
     "Retirement compounding",
@@ -19,10 +18,10 @@
     "Lifestyle inflation",
     "Index investing",
     "Credit card debt",
-    "Emergency fund target"
+    "Emergency fund target",
+    "Retirement compounding"
   ],
   "formats": [
-    "money_alert",
     "money_mistake",
     "rich_vs_poor_habit",
     "money_curiosity",
@@ -41,10 +40,10 @@
     "money_alert",
     "simple_explainer",
     "quick_tip",
-    "money_curiosity"
+    "money_curiosity",
+    "money_mistake"
   ],
   "hooks": [
-    "Money alert: this risk looks harmless until it is expensive.",
     "This finance myth sounds smart, but hurts your future.",
     "Most people hear this too late.",
     "Two money paths, same income, very different outcome.",
@@ -83,6 +82,7 @@
     "If you ignore this, your future self pays the bill.",
     "In plain words, this concept changes how fast money grows.",
     "One simple tweak can fix your cash flow this month.",
-    "Most people hear this too late."
+    "Most people hear this too late.",
+    "Most people lose money here: waiting for the 'perfect' income level before starting."
   ]
 }
