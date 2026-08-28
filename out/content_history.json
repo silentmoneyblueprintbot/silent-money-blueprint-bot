@@ -2,7 +2,6 @@
   "topics": [
     "Lifestyle inflation",
     "Lifestyle inflation",
-    "Lifestyle inflation",
     "Emergency fund target",
     "Credit card debt",
     "Retirement compounding",
@@ -19,10 +18,10 @@
     "Credit card debt",
     "Emergency fund target",
     "Retirement compounding",
-    "Budgeting systems"
+    "Budgeting systems",
+    "Lifestyle inflation"
   ],
   "formats": [
-    "rich_vs_poor_habit",
     "money_curiosity",
     "rich_vs_poor_habit",
     "mini_case",
@@ -41,10 +40,10 @@
     "quick_tip",
     "money_curiosity",
     "money_mistake",
-    "rich_vs_poor_habit"
+    "rich_vs_poor_habit",
+    "simple_explainer"
   ],
   "hooks": [
-    "Most people hear this too late.",
     "Two money paths, same income, very different outcome.",
     "Try this 30-second money move today.",
     "Rich habit vs poor habit, same salary.",
@@ -83,6 +82,7 @@
     "One simple tweak can fix your cash flow this month.",
     "Most people hear this too late.",
     "Most people lose money here: waiting for the 'perfect' income level before starting.",
-    "One habit gap separates progress from paycheck stress."
+    "One habit gap separates progress from paycheck stress.",
+    "In plain words, this concept changes how fast money grows."
   ]
 }
