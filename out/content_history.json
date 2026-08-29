@@ -1,11 +1,5 @@
 {
   "topics": [
-    "Lifestyle inflation",
-    "Lifestyle inflation",
-    "Emergency fund target",
-    "Credit card debt",
-    "Retirement compounding",
-    "Budgeting systems",
     "Index investing",
     "Lifestyle inflation",
     "Lifestyle inflation",
@@ -19,15 +13,15 @@
     "Emergency fund target",
     "Retirement compounding",
     "Budgeting systems",
-    "Lifestyle inflation"
+    "Lifestyle inflation",
+    "Credit card debt",
+    "Lifestyle inflation",
+    "Index investing",
+    "Index investing",
+    "Credit card debt",
+    "Emergency fund target"
   ],
   "formats": [
-    "money_curiosity",
-    "rich_vs_poor_habit",
-    "mini_case",
-    "simple_explainer",
-    "myth_vs_reality",
-    "money_curiosity",
     "money_mistake",
     "quick_tip",
     "money_alert",
@@ -41,15 +35,15 @@
     "money_curiosity",
     "money_mistake",
     "rich_vs_poor_habit",
-    "simple_explainer"
+    "simple_explainer",
+    "money_alert",
+    "quick_tip",
+    "quick_tip",
+    "mini_case",
+    "comparison",
+    "quick_tip"
   ],
   "hooks": [
-    "Two money paths, same income, very different outcome.",
-    "Try this 30-second money move today.",
-    "Rich habit vs poor habit, same salary.",
-    "If you ignore this, your future self pays the bill.",
-    "A quick story that shows why systems beat motivation.",
-    "Finance curiosity that can save you years.",
     "Quick reality check: this mistake keeps salaries feeling small.",
     "Finance curiosity that can save you years.",
     "Quick reality check: this mistake keeps salaries feeling small.",
@@ -83,6 +77,12 @@
     "Most people hear this too late.",
     "Most people lose money here: waiting for the 'perfect' income level before starting.",
     "One habit gap separates progress from paycheck stress.",
-    "In plain words, this concept changes how fast money grows."
+    "In plain words, this concept changes how fast money grows.",
+    "Money alert: this risk looks harmless until it is expensive.",
+    "One simple tweak can fix your cash flow this month.",
+    "Try this 30-second money move today.",
+    "A quick story that shows why systems beat motivation.",
+    "This small choice quietly decides if you build wealth.",
+    "One simple tweak can fix your cash flow this month."
   ]
 }
