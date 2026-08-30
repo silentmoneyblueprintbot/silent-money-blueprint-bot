@@ -1,6 +1,5 @@
 {
   "topics": [
-    "Index investing",
     "Lifestyle inflation",
     "Lifestyle inflation",
     "Budgeting systems",
@@ -19,10 +18,10 @@
     "Index investing",
     "Index investing",
     "Credit card debt",
-    "Emergency fund target"
+    "Emergency fund target",
+    "Budgeting systems"
   ],
   "formats": [
-    "money_mistake",
     "quick_tip",
     "money_alert",
     "money_alert",
@@ -41,10 +40,10 @@
     "quick_tip",
     "mini_case",
     "comparison",
-    "quick_tip"
+    "quick_tip",
+    "simple_explainer"
   ],
   "hooks": [
-    "Quick reality check: this mistake keeps salaries feeling small.",
     "Finance curiosity that can save you years.",
     "Quick reality check: this mistake keeps salaries feeling small.",
     "Quick reality check: this mistake keeps salaries feeling small.",
@@ -83,6 +82,7 @@
     "Try this 30-second money move today.",
     "A quick story that shows why systems beat motivation.",
     "This small choice quietly decides if you build wealth.",
-    "One simple tweak can fix your cash flow this month."
+    "One simple tweak can fix your cash flow this month.",
+    "Let me explain cash flow without finance jargon."
   ]
 }
