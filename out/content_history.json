@@ -1,6 +1,5 @@
 {
   "topics": [
-    "Lifestyle inflation",
     "Budgeting systems",
     "Retirement compounding",
     "Budgeting systems",
@@ -19,10 +18,10 @@
     "Credit card debt",
     "Emergency fund target",
     "Budgeting systems",
-    "Retirement compounding"
+    "Retirement compounding",
+    "Lifestyle inflation"
   ],
   "formats": [
-    "money_alert",
     "money_alert",
     "comparison",
     "comparison",
@@ -41,10 +40,10 @@
     "comparison",
     "quick_tip",
     "simple_explainer",
-    "myth_vs_reality"
+    "myth_vs_reality",
+    "mini_case"
   ],
   "hooks": [
-    "Quick reality check: this mistake keeps salaries feeling small.",
     "Quick reality check: this mistake keeps salaries feeling small.",
     "If you ignore this, your future self pays the bill.",
     "One simple tweak can fix your cash flow this month.",
@@ -83,6 +82,7 @@
     "This small choice quietly decides if you build wealth.",
     "One simple tweak can fix your cash flow this month.",
     "Let me explain cash flow without finance jargon.",
-    "Money myth in one line: small monthly investments do not matter."
+    "Money myth in one line: small monthly investments do not matter.",
+    "Real mini case, real numbers, real lesson."
   ]
 }
