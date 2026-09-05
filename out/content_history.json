@@ -1,11 +1,5 @@
 {
   "topics": [
-    "Lifestyle inflation",
-    "Lifestyle inflation",
-    "Index investing",
-    "Credit card debt",
-    "Emergency fund target",
-    "Retirement compounding",
     "Budgeting systems",
     "Lifestyle inflation",
     "Credit card debt",
@@ -19,15 +13,15 @@
     "Lifestyle inflation",
     "Budgeting systems",
     "Index investing",
-    "Credit card debt"
+    "Credit card debt",
+    "Emergency fund target",
+    "Emergency fund target",
+    "Emergency fund target",
+    "Emergency fund target",
+    "Emergency fund target",
+    "Emergency fund target"
   ],
   "formats": [
-    "mini_case",
-    "money_alert",
-    "simple_explainer",
-    "quick_tip",
-    "money_curiosity",
-    "money_mistake",
     "rich_vs_poor_habit",
     "simple_explainer",
     "money_alert",
@@ -41,15 +35,15 @@
     "mini_case",
     "rich_vs_poor_habit",
     "money_alert",
-    "quick_tip"
+    "quick_tip",
+    "myth_vs_reality",
+    "myth_vs_reality",
+    "money_mistake",
+    "money_mistake",
+    "money_mistake",
+    "simple_explainer"
   ],
   "hooks": [
-    "Real mini case, real numbers, real lesson.",
-    "Two money paths, same income, very different outcome.",
-    "Let me explain liquidity without finance jargon.",
-    "This finance myth sounds smart, but hurts your future.",
-    "Quick reality check: this mistake keeps salaries feeling small.",
-    "Money alert: this risk looks harmless until it is expensive.",
     "Quick reality check: this mistake keeps salaries feeling small.",
     "One habit gap separates progress from paycheck stress.",
     "Finance curiosity that can save you years.",
@@ -83,6 +77,12 @@
     "Real mini case, real numbers, real lesson.",
     "Rich habit vs poor habit, same salary.",
     "Money alert: this risk looks harmless until it is expensive.",
-    "Try this 30-second money move today."
+    "Try this 30-second money move today.",
+    "Money myth in one line: you need to save 12 months before investing anything.",
+    "Money myth in one line: you need to save 12 months before investing anything.",
+    "Most people lose money here: keeping every euro in checking and hoping no surprise happens.",
+    "Most people lose money here: keeping every euro in checking and hoping no surprise happens.",
+    "Most people lose money here: keeping every euro in checking and hoping no surprise happens.",
+    "In plain words, this concept changes how fast money grows."
   ]
 }
