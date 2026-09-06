@@ -1,6 +1,5 @@
 {
   "topics": [
-    "Budgeting systems",
     "Lifestyle inflation",
     "Credit card debt",
     "Lifestyle inflation",
@@ -19,10 +18,10 @@
     "Emergency fund target",
     "Emergency fund target",
     "Emergency fund target",
-    "Emergency fund target"
+    "Emergency fund target",
+    "Budgeting systems"
   ],
   "formats": [
-    "rich_vs_poor_habit",
     "simple_explainer",
     "money_alert",
     "quick_tip",
@@ -41,10 +40,10 @@
     "money_mistake",
     "money_mistake",
     "money_mistake",
-    "simple_explainer"
+    "simple_explainer",
+    "comparison"
   ],
   "hooks": [
-    "Quick reality check: this mistake keeps salaries feeling small.",
     "One habit gap separates progress from paycheck stress.",
     "Finance curiosity that can save you years.",
     "One habit gap separates progress from paycheck stress.",
@@ -83,6 +82,7 @@
     "Most people lose money here: keeping every euro in checking and hoping no surprise happens.",
     "Most people lose money here: keeping every euro in checking and hoping no surprise happens.",
     "Most people lose money here: keeping every euro in checking and hoping no surprise happens.",
-    "In plain words, this concept changes how fast money grows."
+    "In plain words, this concept changes how fast money grows.",
+    "This small choice quietly decides if you build wealth."
   ]
 }
