@@ -1,6 +1,5 @@
 {
   "topics": [
-    "Credit card debt",
     "Lifestyle inflation",
     "Index investing",
     "Index investing",
@@ -19,10 +18,10 @@
     "Emergency fund target",
     "Emergency fund target",
     "Budgeting systems",
-    "Lifestyle inflation"
+    "Lifestyle inflation",
+    "Retirement compounding"
   ],
   "formats": [
-    "money_alert",
     "quick_tip",
     "quick_tip",
     "mini_case",
@@ -41,10 +40,10 @@
     "money_mistake",
     "simple_explainer",
     "comparison",
-    "money_alert"
+    "money_alert",
+    "mini_case"
   ],
   "hooks": [
-    "Finance curiosity that can save you years.",
     "One habit gap separates progress from paycheck stress.",
     "Real mini case, real numbers, real lesson.",
     "Let me explain APR without finance jargon.",
@@ -83,6 +82,7 @@
     "Most people lose money here: keeping every euro in checking and hoping no surprise happens.",
     "In plain words, this concept changes how fast money grows.",
     "This small choice quietly decides if you build wealth.",
-    "If you ignore this, your future self pays the bill."
+    "If you ignore this, your future self pays the bill.",
+    "A quick story that shows why systems beat motivation."
   ]
 }
