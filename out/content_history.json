@@ -1,6 +1,5 @@
 {
   "topics": [
-    "Lifestyle inflation",
     "Index investing",
     "Index investing",
     "Credit card debt",
@@ -19,10 +18,10 @@
     "Emergency fund target",
     "Budgeting systems",
     "Lifestyle inflation",
-    "Retirement compounding"
+    "Retirement compounding",
+    "Credit card debt"
   ],
   "formats": [
-    "quick_tip",
     "quick_tip",
     "mini_case",
     "comparison",
@@ -41,10 +40,10 @@
     "simple_explainer",
     "comparison",
     "money_alert",
-    "mini_case"
+    "mini_case",
+    "rich_vs_poor_habit"
   ],
   "hooks": [
-    "One habit gap separates progress from paycheck stress.",
     "Real mini case, real numbers, real lesson.",
     "Let me explain APR without finance jargon.",
     "This finance myth sounds smart, but hurts your future.",
@@ -83,6 +82,7 @@
     "In plain words, this concept changes how fast money grows.",
     "This small choice quietly decides if you build wealth.",
     "If you ignore this, your future self pays the bill.",
-    "A quick story that shows why systems beat motivation."
+    "A quick story that shows why systems beat motivation.",
+    "One habit gap separates progress from paycheck stress."
   ]
 }
