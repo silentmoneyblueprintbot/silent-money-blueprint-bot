@@ -1,6 +1,5 @@
 {
   "topics": [
-    "Index investing",
     "Credit card debt",
     "Emergency fund target",
     "Budgeting systems",
@@ -19,10 +18,10 @@
     "Lifestyle inflation",
     "Retirement compounding",
     "Credit card debt",
-    "Index investing"
+    "Index investing",
+    "Retirement compounding"
   ],
   "formats": [
-    "mini_case",
     "comparison",
     "quick_tip",
     "simple_explainer",
@@ -41,10 +40,10 @@
     "money_alert",
     "mini_case",
     "rich_vs_poor_habit",
-    "money_mistake"
+    "money_mistake",
+    "simple_explainer"
   ],
   "hooks": [
-    "Let me explain APR without finance jargon.",
     "This finance myth sounds smart, but hurts your future.",
     "Most people hear this too late.",
     "Quick reality check: this mistake keeps salaries feeling small.",
@@ -83,6 +82,7 @@
     "If you ignore this, your future self pays the bill.",
     "A quick story that shows why systems beat motivation.",
     "One habit gap separates progress from paycheck stress.",
-    "Most people lose money here: trying to pick the one perfect stock every month."
+    "Most people lose money here: trying to pick the one perfect stock every month.",
+    "In plain words, this concept changes how fast money grows."
   ]
 }
