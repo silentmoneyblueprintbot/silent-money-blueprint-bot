@@ -1,11 +1,5 @@
 {
   "topics": [
-    "Credit card debt",
-    "Emergency fund target",
-    "Budgeting systems",
-    "Retirement compounding",
-    "Lifestyle inflation",
-    "Budgeting systems",
     "Index investing",
     "Credit card debt",
     "Emergency fund target",
@@ -19,15 +13,15 @@
     "Retirement compounding",
     "Credit card debt",
     "Index investing",
-    "Retirement compounding"
+    "Retirement compounding",
+    "Emergency fund target",
+    "Emergency fund target",
+    "Emergency fund target",
+    "Emergency fund target",
+    "Emergency fund target",
+    "Emergency fund target"
   ],
   "formats": [
-    "comparison",
-    "quick_tip",
-    "simple_explainer",
-    "myth_vs_reality",
-    "mini_case",
-    "rich_vs_poor_habit",
     "money_alert",
     "quick_tip",
     "myth_vs_reality",
@@ -41,15 +35,15 @@
     "mini_case",
     "rich_vs_poor_habit",
     "money_mistake",
-    "simple_explainer"
+    "simple_explainer",
+    "money_curiosity",
+    "comparison",
+    "quick_tip",
+    "money_curiosity",
+    "money_curiosity",
+    "money_alert"
   ],
   "hooks": [
-    "This finance myth sounds smart, but hurts your future.",
-    "Most people hear this too late.",
-    "Quick reality check: this mistake keeps salaries feeling small.",
-    "One simple tweak can fix your cash flow this month.",
-    "If you ignore this, your future self pays the bill.",
-    "Money alert: this risk looks harmless until it is expensive.",
     "This small choice quietly decides if you build wealth.",
     "This small choice quietly decides if you build wealth.",
     "Real mini case, real numbers, real lesson.",
@@ -83,6 +77,12 @@
     "A quick story that shows why systems beat motivation.",
     "One habit gap separates progress from paycheck stress.",
     "Most people lose money here: trying to pick the one perfect stock every month.",
-    "In plain words, this concept changes how fast money grows."
+    "In plain words, this concept changes how fast money grows.",
+    "Finance curiosity that can save you years.",
+    "Two money paths, same income, very different outcome.",
+    "One simple tweak can fix your cash flow this month.",
+    "Finance curiosity that can save you years.",
+    "Finance curiosity that can save you years.",
+    "If you ignore this, your future self pays the bill."
   ]
 }
