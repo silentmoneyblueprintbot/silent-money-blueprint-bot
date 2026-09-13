@@ -2,13 +2,11 @@
   "ok": true,
   "strict": true,
   "errors": [],
-  "warnings": [
-    "Description does not include #shorts."
-  ],
+  "warnings": [],
   "metrics": {
-    "audio_seconds": 153.626,
-    "video_seconds": 154.433,
+    "audio_seconds": 25.287,
+    "video_seconds": 26.1,
     "video_black_ratio": 0.0,
-    "script_word_count": 393
+    "script_word_count": 66
   }
 }

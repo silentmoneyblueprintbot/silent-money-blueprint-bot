@@ -1,6 +1,5 @@
 {
   "topics": [
-    "Index investing",
     "Credit card debt",
     "Emergency fund target",
     "Emergency fund target",
@@ -19,10 +18,10 @@
     "Emergency fund target",
     "Emergency fund target",
     "Emergency fund target",
-    "Emergency fund target"
+    "Emergency fund target",
+    "Credit card debt"
   ],
   "formats": [
-    "money_alert",
     "quick_tip",
     "myth_vs_reality",
     "myth_vs_reality",
@@ -41,10 +40,10 @@
     "quick_tip",
     "money_curiosity",
     "money_curiosity",
-    "money_alert"
+    "money_alert",
+    "myth_vs_reality"
   ],
   "hooks": [
-    "This small choice quietly decides if you build wealth.",
     "This small choice quietly decides if you build wealth.",
     "Real mini case, real numbers, real lesson.",
     "If you ignore this, your future self pays the bill.",
@@ -83,6 +82,7 @@
     "One simple tweak can fix your cash flow this month.",
     "Finance curiosity that can save you years.",
     "Finance curiosity that can save you years.",
-    "If you ignore this, your future self pays the bill."
+    "If you ignore this, your future self pays the bill.",
+    "This finance myth sounds smart, but hurts your future."
   ]
 }
