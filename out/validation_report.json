@@ -4,9 +4,9 @@
   "errors": [],
   "warnings": [],
   "metrics": {
-    "audio_seconds": 25.287,
-    "video_seconds": 26.1,
+    "audio_seconds": 23.876,
+    "video_seconds": 24.667,
     "video_black_ratio": 0.0,
-    "script_word_count": 66
+    "script_word_count": 57
   }
 }

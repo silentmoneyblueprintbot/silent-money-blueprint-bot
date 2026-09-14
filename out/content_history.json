@@ -1,6 +1,5 @@
 {
   "topics": [
-    "Credit card debt",
     "Emergency fund target",
     "Emergency fund target",
     "Emergency fund target",
@@ -19,10 +18,10 @@
     "Emergency fund target",
     "Emergency fund target",
     "Emergency fund target",
-    "Credit card debt"
+    "Credit card debt",
+    "Budgeting systems"
   ],
   "formats": [
-    "quick_tip",
     "myth_vs_reality",
     "myth_vs_reality",
     "money_mistake",
@@ -41,10 +40,10 @@
     "money_curiosity",
     "money_curiosity",
     "money_alert",
-    "myth_vs_reality"
+    "myth_vs_reality",
+    "quick_tip"
   ],
   "hooks": [
-    "This small choice quietly decides if you build wealth.",
     "Real mini case, real numbers, real lesson.",
     "If you ignore this, your future self pays the bill.",
     "In plain words, this concept changes how fast money grows.",
@@ -83,6 +82,7 @@
     "Finance curiosity that can save you years.",
     "Finance curiosity that can save you years.",
     "If you ignore this, your future self pays the bill.",
-    "This finance myth sounds smart, but hurts your future."
+    "This finance myth sounds smart, but hurts your future.",
+    "Try this 30-second money move today."
   ]
 }
