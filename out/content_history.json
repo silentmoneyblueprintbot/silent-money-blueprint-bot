@@ -1,7 +1,6 @@
 {
   "topics": [
     "Emergency fund target",
-    "Emergency fund target",
     "Budgeting systems",
     "Lifestyle inflation",
     "Retirement compounding",
@@ -19,10 +18,10 @@
     "Retirement compounding",
     "Index investing",
     "Lifestyle inflation",
-    "Emergency fund target"
+    "Emergency fund target",
+    "Lifestyle inflation"
   ],
   "formats": [
-    "money_mistake",
     "simple_explainer",
     "comparison",
     "money_alert",
@@ -41,10 +40,10 @@
     "money_mistake",
     "simple_explainer",
     "comparison",
-    "rich_vs_poor_habit"
+    "rich_vs_poor_habit",
+    "money_curiosity"
   ],
   "hooks": [
-    "Most people hear this too late.",
     "Most people lose money here: waiting for the 'perfect' income level before starting.",
     "One habit gap separates progress from paycheck stress.",
     "In plain words, this concept changes how fast money grows.",
@@ -83,6 +82,7 @@
     "Most people lose money here: waiting for the 'perfect' income level before starting.",
     "Let me explain dollar-cost averaging without finance jargon.",
     "Two money paths, same income, very different outcome.",
-    "Rich habit vs poor habit, same salary."
+    "Rich habit vs poor habit, same salary.",
+    "Finance curiosity that can save you years."
   ]
 }
