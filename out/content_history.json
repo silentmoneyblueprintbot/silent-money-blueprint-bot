@@ -1,11 +1,5 @@
 {
   "topics": [
-    "Emergency fund target",
-    "Budgeting systems",
-    "Lifestyle inflation",
-    "Retirement compounding",
-    "Credit card debt",
-    "Index investing",
     "Retirement compounding",
     "Emergency fund target",
     "Emergency fund target",
@@ -19,15 +13,15 @@
     "Index investing",
     "Lifestyle inflation",
     "Emergency fund target",
-    "Lifestyle inflation"
+    "Lifestyle inflation",
+    "Credit card debt",
+    "Credit card debt",
+    "Credit card debt",
+    "Credit card debt",
+    "Credit card debt",
+    "Credit card debt"
   ],
   "formats": [
-    "simple_explainer",
-    "comparison",
-    "money_alert",
-    "mini_case",
-    "rich_vs_poor_habit",
-    "money_mistake",
     "simple_explainer",
     "money_curiosity",
     "comparison",
@@ -41,15 +35,15 @@
     "simple_explainer",
     "comparison",
     "rich_vs_poor_habit",
-    "money_curiosity"
+    "money_curiosity",
+    "myth_vs_reality",
+    "money_mistake",
+    "quick_tip",
+    "money_mistake",
+    "money_mistake",
+    "mini_case"
   ],
   "hooks": [
-    "Most people lose money here: waiting for the 'perfect' income level before starting.",
-    "One habit gap separates progress from paycheck stress.",
-    "In plain words, this concept changes how fast money grows.",
-    "Money alert: this risk looks harmless until it is expensive.",
-    "One simple tweak can fix your cash flow this month.",
-    "Try this 30-second money move today.",
     "A quick story that shows why systems beat motivation.",
     "This small choice quietly decides if you build wealth.",
     "One simple tweak can fix your cash flow this month.",
@@ -83,6 +77,12 @@
     "Let me explain dollar-cost averaging without finance jargon.",
     "Two money paths, same income, very different outcome.",
     "Rich habit vs poor habit, same salary.",
-    "Finance curiosity that can save you years."
+    "Finance curiosity that can save you years.",
+    "This finance myth sounds smart, but hurts your future.",
+    "Most people lose money here: paying only the minimum and calling it under control.",
+    "Try this 30-second money move today.",
+    "Most people lose money here: paying only the minimum and calling it under control.",
+    "Most people lose money here: paying only the minimum and calling it under control.",
+    "A quick story that shows why systems beat motivation."
   ]
 }
