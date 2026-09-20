@@ -1,6 +1,5 @@
 {
   "topics": [
-    "Retirement compounding",
     "Emergency fund target",
     "Emergency fund target",
     "Emergency fund target",
@@ -19,10 +18,10 @@
     "Credit card debt",
     "Credit card debt",
     "Credit card debt",
-    "Credit card debt"
+    "Credit card debt",
+    "Index investing"
   ],
   "formats": [
-    "simple_explainer",
     "money_curiosity",
     "comparison",
     "quick_tip",
@@ -41,10 +40,10 @@
     "quick_tip",
     "money_mistake",
     "money_mistake",
-    "mini_case"
+    "mini_case",
+    "money_alert"
   ],
   "hooks": [
-    "A quick story that shows why systems beat motivation.",
     "This small choice quietly decides if you build wealth.",
     "One simple tweak can fix your cash flow this month.",
     "Let me explain cash flow without finance jargon.",
@@ -83,6 +82,7 @@
     "Try this 30-second money move today.",
     "Most people lose money here: paying only the minimum and calling it under control.",
     "Most people lose money here: paying only the minimum and calling it under control.",
-    "A quick story that shows why systems beat motivation."
+    "A quick story that shows why systems beat motivation.",
+    "Money alert: this risk looks harmless until it is expensive."
   ]
 }
