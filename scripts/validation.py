@@ -119,6 +119,13 @@ def validate_artifacts(strict: bool = True) -> Dict[str, object]:
             )
 
     if video_path.exists() and video_seconds > 0:
+        if not 15.0 <= video_seconds <= 62.0:
+            _append_error(errors, f"Video length {video_seconds:.1f}s is outside 15-62s.")
+        dims = subprocess.check_output(
+            ["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
+             "stream=width,height", "-of", "csv=p=0", str(video_path)], text=True).strip()
+        if dims != "1080,1920":
+            _append_error(errors, f"Video resolution is {dims}, expected 1080,1920.")
         video_black_ratio = black_ratio(video_path, video_seconds)
         if video_black_ratio > 0.45:
             _append_error(
