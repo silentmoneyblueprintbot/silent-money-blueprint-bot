@@ -2,108 +2,110 @@ name: Publish to YouTube
 
 on:
   schedule:
-    - cron: "0 10 * * *"   # todos os dias 10:00 UTC
-  workflow_dispatch: {}
+    - cron: "0 10 * * *"   # todos os dias 10:00 UTC (11:00 em Lisboa no verão)
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: "Publicar no YouTube? (desligado = só pré-visualização)"
+        type: boolean
+        default: false
 
-# Necessário para o passo de "commit-back" do histórico (keepalive + de-dup).
+# Nunca correm dois ao mesmo tempo (evita vídeos duplicados e conflitos no histórico).
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
 permissions:
-  contents: write
+  contents: write   # só para gravar o histórico depois de publicar
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     env:
-      TIKTOK_ACCESS_TOKEN: ${{ secrets.TIKTOK_ACCESS_TOKEN }}
-      TIKTOK_PRIVACY_LEVEL: ${{ vars.TIKTOK_PRIVACY_LEVEL }}
+      # PRÉ-VISUALIZAÇÃO POR OMISSÃO. O cron só publica quando a variável de
+      # repositório PUBLISH_MODE = "publish". À mão, só publica se marcares a caixa.
+      PUBLISH: ${{ (github.event_name == 'workflow_dispatch' && inputs.publish) || (github.event_name == 'schedule' && vars.PUBLISH_MODE == 'publish') }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
-          python-version: "3.11"
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
 
       - name: Install Python deps
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Install ffmpeg + fonts (drawtext)
+      - name: Install ffmpeg + caption font
         run: |
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg fontconfig fonts-dejavu-core curl tar
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-montserrat fontconfig
+          fc-cache -f >/dev/null
+          fc-list | grep -qi "Montserrat" && echo "Montserrat OK"
 
-      # CORREÇÃO PRINCIPAL: já NÃO chamamos a API do GitHub (que apanha rate-limit
-      # nos IPs partilhados do Actions e fazia o job inteiro rebentar aqui).
-      # Fixamos um release estável e conhecido do Piper por URL direto.
-      # continue-on-error: o Piper é apenas o fallback de voz — se falhar, o job
-      # continua e o edge-tts (voz neural, principal) trata do áudio na mesma.
-      - name: Install Piper (offline TTS fallback)
-        continue-on-error: true
-        run: |
-          set -euxo pipefail
-          mkdir -p piper && cd piper
-          PIPER_URL="https://github.com/rhasspy/piper/releases/download/2023.11.14-2/piper_linux_x86_64.tar.gz"
-          curl -fL --retry 5 --retry-delay 3 -o piper_linux_x86_64.tar.gz "$PIPER_URL"
-          tar -xzf piper_linux_x86_64.tar.gz
-          PIPER_BIN=$(find . -type f -name piper -perm -111 | head -n 1)
-          echo "PIPER_BIN=$PIPER_BIN"
-          "$PIPER_BIN" --help | head -n 5 || true
-
-      - name: Download Piper voice (en_US)
-        continue-on-error: true
-        run: |
-          set -euxo pipefail
-          mkdir -p voices && cd voices
-          BASE="https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/lessac/high"
-          curl -fL --retry 5 --retry-delay 3 -o en_US-lessac-high.onnx      "$BASE/en_US-lessac-high.onnx"
-          curl -fL --retry 5 --retry-delay 3 -o en_US-lessac-high.onnx.json "$BASE/en_US-lessac-high.onnx.json"
-          ls -lah
-
-      # Segurança: escrevemos o secret via env em vez de o interpolar diretamente
-      # na linha de comando (evita qualquer risco de exposição em logs).
-      - name: Write OAuth secret to file
-        env:
-          CLIENT_SECRET_JSON: ${{ secrets.YOUTUBE_CLIENT_SECRET_JSON }}
-        run: printf '%s' "$CLIENT_SECRET_JSON" > client_secret.json
-
-      - name: Decide video mode (short daily, long on Saturday)
-        run: |
-          if [ "$(date -u +%u)" = "6" ]; then
-            echo "VIDEO_MODE=long" >> $GITHUB_ENV
-          else
-            echo "VIDEO_MODE=short" >> $GITHUB_ENV
-          fi
+      - name: Install Claude Code CLI
+        run: npm install -g @anthropic-ai/claude-code@2.1.278
 
       - name: Generate video
         env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
         run: python scripts/generate_video.py
 
       - name: Validate generated artifacts
         run: python scripts/validation.py --strict
 
+      - name: Upload preview (video + script)
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: preview-${{ github.run_number }}
+          path: |
+            out/video.mp4
+            out/script.json
+            out/meta.json
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Write OAuth secret to file
+        if: env.PUBLISH == 'true'
+        env:
+          CLIENT_SECRET_JSON: ${{ secrets.YOUTUBE_CLIENT_SECRET_JSON }}
+        run: printf '%s' "$CLIENT_SECRET_JSON" > client_secret.json
+
       - name: Upload to YouTube
+        if: env.PUBLISH == 'true'
         env:
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
         run: python scripts/upload_youtube.py
 
       - name: Upload to TikTok (optional)
-        if: ${{ env.TIKTOK_ACCESS_TOKEN != '' }}
-        run: python scripts/upload_tiktok.py
-
-      # KEEPALIVE + MEMÓRIA DE DE-DUP:
-      # 1) Persiste o content_history.json para o de-dup de temas funcionar a longo prazo.
-      # 2) Cada commit reinicia o contador de inatividade de 60 dias do GitHub,
-      #    impedindo que o cron volte a ser DESATIVADO automaticamente.
-      - name: Persist content history (keepalive + de-dup memory)
-        if: always()
+        if: env.PUBLISH == 'true'
+        env:
+          TIKTOK_ACCESS_TOKEN: ${{ secrets.TIKTOK_ACCESS_TOKEN }}
+          TIKTOK_PRIVACY_LEVEL: ${{ vars.TIKTOK_PRIVACY_LEVEL }}
         run: |
+          if [ -z "$TIKTOK_ACCESS_TOKEN" ]; then echo "TikTok não configurado, a saltar."; exit 0; fi
+          python scripts/upload_tiktok.py
+
+      # Grava o histórico (temas já publicados + clips usados) só depois de publicar.
+      # Cada commit também reinicia o contador de 60 dias de inatividade do GitHub.
+      - name: Persist content history
+        if: always() && env.PUBLISH == 'true'
+        run: |
+          rm -f client_secret.json
           git config user.name "smbb-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add out/content_history.json out/validation_report.json 2>/dev/null || true
+          git add out/content_history.json
           if git diff --cached --quiet; then
-            echo "Sem alterações para commit."
+            echo "Sem alterações no histórico."
           else
             git commit -m "chore: update content history [skip ci]"
             git push
