@@ -1,88 +1,47 @@
 {
-  "topics": [
-    "Emergency fund target",
-    "Emergency fund target",
-    "Emergency fund target",
-    "Emergency fund target",
-    "Emergency fund target",
-    "Emergency fund target",
-    "Credit card debt",
-    "Budgeting systems",
-    "Retirement compounding",
-    "Index investing",
-    "Lifestyle inflation",
-    "Emergency fund target",
-    "Lifestyle inflation",
-    "Credit card debt",
-    "Credit card debt",
-    "Credit card debt",
-    "Credit card debt",
-    "Credit card debt",
-    "Credit card debt",
-    "Index investing"
+  "version": 2,
+  "published": [
+    {
+      "title": "Emergency fund target",
+      "topic": "Emergency fund target"
+    },
+    {
+      "title": "Credit card debt",
+      "topic": "Credit card debt"
+    },
+    {
+      "title": "Budgeting systems",
+      "topic": "Budgeting systems"
+    },
+    {
+      "title": "Retirement compounding",
+      "topic": "Retirement compounding"
+    },
+    {
+      "title": "Index investing",
+      "topic": "Index investing"
+    },
+    {
+      "title": "Lifestyle inflation",
+      "topic": "Lifestyle inflation"
+    },
+    {
+      "date": "2026-09-21",
+      "video_id": "UnZcXR9FjPc",
+      "title": "One Graduation Gift, Two Completely Different Money Stories",
+      "topic": "compound interest on a one-time windfall vs spending it",
+      "pillar": "compound interest",
+      "angle": "a short relatable story about one person and one decision"
+    }
   ],
-  "formats": [
-    "money_curiosity",
-    "comparison",
-    "quick_tip",
-    "money_curiosity",
-    "money_curiosity",
-    "money_alert",
-    "myth_vs_reality",
-    "quick_tip",
-    "money_mistake",
-    "simple_explainer",
-    "comparison",
-    "rich_vs_poor_habit",
-    "money_curiosity",
-    "myth_vs_reality",
-    "money_mistake",
-    "quick_tip",
-    "money_mistake",
-    "money_mistake",
-    "mini_case",
-    "money_alert"
-  ],
-  "hooks": [
-    "This small choice quietly decides if you build wealth.",
-    "One simple tweak can fix your cash flow this month.",
-    "Let me explain cash flow without finance jargon.",
-    "Money myth in one line: small monthly investments do not matter.",
-    "Real mini case, real numbers, real lesson.",
-    "Rich habit vs poor habit, same salary.",
-    "Money alert: this risk looks harmless until it is expensive.",
-    "Try this 30-second money move today.",
-    "Money myth in one line: you need to save 12 months before investing anything.",
-    "Money myth in one line: you need to save 12 months before investing anything.",
-    "Most people lose money here: keeping every euro in checking and hoping no surprise happens.",
-    "Most people lose money here: keeping every euro in checking and hoping no surprise happens.",
-    "Most people lose money here: keeping every euro in checking and hoping no surprise happens.",
-    "In plain words, this concept changes how fast money grows.",
-    "This small choice quietly decides if you build wealth.",
-    "If you ignore this, your future self pays the bill.",
-    "A quick story that shows why systems beat motivation.",
-    "One habit gap separates progress from paycheck stress.",
-    "Most people lose money here: trying to pick the one perfect stock every month.",
-    "In plain words, this concept changes how fast money grows.",
-    "Finance curiosity that can save you years.",
-    "Two money paths, same income, very different outcome.",
-    "One simple tweak can fix your cash flow this month.",
-    "Finance curiosity that can save you years.",
-    "Finance curiosity that can save you years.",
-    "If you ignore this, your future self pays the bill.",
-    "This finance myth sounds smart, but hurts your future.",
-    "Try this 30-second money move today.",
-    "Most people lose money here: waiting for the 'perfect' income level before starting.",
-    "Let me explain dollar-cost averaging without finance jargon.",
-    "Two money paths, same income, very different outcome.",
-    "Rich habit vs poor habit, same salary.",
-    "Finance curiosity that can save you years.",
-    "This finance myth sounds smart, but hurts your future.",
-    "Most people lose money here: paying only the minimum and calling it under control.",
-    "Try this 30-second money move today.",
-    "Most people lose money here: paying only the minimum and calling it under control.",
-    "Most people lose money here: paying only the minimum and calling it under control.",
-    "A quick story that shows why systems beat motivation.",
-    "Money alert: this risk looks harmless until it is expensive."
+  "pexels_ids": [
+    6565830,
+    7842891,
+    7989855,
+    6214218,
+    35332817,
+    6549528,
+    3943961,
+    13929626
   ]
 }
