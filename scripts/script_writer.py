@@ -124,7 +124,8 @@ def _extract_json(raw: str) -> Dict[str, Any]:
 def _run_claude(user_prompt: str) -> Dict[str, Any]:
     if shutil.which("claude") is None:
         raise RuntimeError("Claude Code CLI ('claude') não está instalado no runner.")
-    token = os.getenv("CLAUDE_CODE_OAUTH_TOKEN", "").strip()
+    # Remove espaços/quebras de linha que entram ao copiar o token do Terminal.
+    token = re.sub(r"\s+", "", os.getenv("CLAUDE_CODE_OAUTH_TOKEN", ""))
     if not token:
         raise RuntimeError("Falta o secret CLAUDE_CODE_OAUTH_TOKEN.")
 
