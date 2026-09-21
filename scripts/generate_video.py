@@ -98,8 +98,8 @@ def _ass_time(t: float) -> str:
 
 def _caption_word(text: str) -> str:
     text = re.sub(r"[{}\\]", "", text)
-    text = re.sub(r"[^\w$%'’\-]", "", text)
-    return text.upper()
+    text = re.sub(r"[^\w$%'’\- ]", "", text)  # mantém espaços ("20 dollars" vem num só bloco)
+    return re.sub(r"\s+", " ", text).strip().upper()
 
 
 def group_words(timeline: List[Dict[str, Any]], max_words: int = 3, max_chars: int = 16) -> List[List[Dict[str, Any]]]:
@@ -132,7 +132,7 @@ YCbCr Matrix: TV.709
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Cap,{CAPTION_FONT},92,&H00FFFFFF,&H00FFFFFF,&H00000000,&H99000000,0,0,0,0,100,100,1,0,1,7,4,5,110,110,0,1
+Style: Cap,{CAPTION_FONT},104,&H00FFFFFF,&H00FFFFFF,&H00000000,&H99000000,0,0,0,0,100,100,1,0,1,8,4,5,90,90,0,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
