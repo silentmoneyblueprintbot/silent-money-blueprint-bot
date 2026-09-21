@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+out/clips/
+client_secret*.json
